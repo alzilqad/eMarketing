@@ -17,6 +17,7 @@ app.use('/assets', express.static('assets'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
 app.use(exSession({secret: 'secret value', saveUninitialized: true, resave: false}));
+
 app.use('/home', home);
 app.use('/manager', manager);
 app.use('/clients', clients);

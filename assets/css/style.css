@@ -1946,3 +1946,22 @@ section {
   margin: 0;
   padding:0;
 }
+#manager-profile-box{
+  border: 1px #0BB5FF solid;
+  min-height: 350px;
+  border-radius:5px;
+}
+#manager-profile-pic{
+  min-width: 150px;
+  min-height: 150px;
+  max-width: 200px;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+#login-box{
+  padding-top: 120px;
+  border: 1px #0BB5FF solid;
+  border-radius: 15px;
+  min-height: 500px;
+}

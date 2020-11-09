@@ -15,4 +15,16 @@ router.get('/profile/edit/:id', (req, res)=>{
 router.get('/login', (req, res)=>{
     res.render('manager/home/login');
 });
+router.get('/signup', (req, res)=>{
+    res.render('manager/home/sign-up');
+});
+router.get('/forgot-password', (req, res)=>{
+    res.render('manager/home/forgot-password');
+});
+router.get('/verify-code', (req, res)=>{
+    res.render('manager/home/verify-code');
+});
+router.get('/reset-password', (req, res)=>{
+    res.render('manager/home/reset-password');
+});
 module.exports = router;

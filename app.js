@@ -3,11 +3,11 @@ const express 			= require('express');
 const bodyParser 		= require('body-parser');
 const exSession 		= require('express-session');
 const cookieParser 		= require('cookie-parser');
-const home				= require('./controllers/home');
-const manager			= require('./controllers/manager');
-const clients			= require('./controllers/clients');
 const app				= express();
 const port				= 3000;
+
+const home				= require('./controllers/clientUser/home');
+const client			= require('./controllers/clientUser/client');
 
 //configuration
 app.set('view engine', 'ejs');
@@ -19,8 +19,7 @@ app.use(cookieParser());
 app.use(exSession({secret: 'secret value', saveUninitialized: true, resave: false}));
 
 app.use('/home', home);
-app.use('/manager', manager);
-app.use('/clients', clients);
+app.use('/client', client);
 
 //router
 app.get('/', (req, res)=>{

@@ -22,7 +22,9 @@ router.get('/profile', (req, res)=>{
         res.redirect('/manager/login');
     }
     else{
-        res.render('manager/profile/index');
+        managerModel.getByEmail(req.session.email, function(result){
+            res.render('manager/profile/index', {user:result});
+        });
     }
 });
 router.get('/profile/edit/:id', (req, res)=>{
@@ -30,9 +32,28 @@ router.get('/profile/edit/:id', (req, res)=>{
         res.redirect('/manager/login');
     }
     else{
-        res.render('manager/profile/edit');
+        managerModel.getByEmail(req.session.email, function(result){
+            res.render('manager/profile/edit', {user:result});
+        });        
     }
 });
+router.post('/profile/edit/:email',(req, res) => {
+    if(req.session.email==null || req.session.email.length<2){
+        res.redirect('/manager/login');
+    }
+    else{
+        var sql = "UPDATE `manager` SET `full_name`='"+req.body.full_name+"',`phone`='"+req.body.phone+"',`dob`='"+req.body.date+"',`address`='"+req.body.address+"',`city`='"+req.body.city+"',`country`='"+req.body.country+"',`company_name`='"+req.body.company_name+"' WHERE email='"+req.params.email+"'";
+        managerModel.update(sql, function(callback) {
+            if(callback==true){
+                res.redirect('/manager/profile');
+            }
+            else{
+                res.redirect('/manager/profile');
+            }
+        });
+    }
+});
+
 router.get('/login', (req, res)=>{
     res.render('manager/home/login');
 });

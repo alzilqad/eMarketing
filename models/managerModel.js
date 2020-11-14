@@ -11,14 +11,10 @@ module.exports= {
 			}
 		});
 	},
-	getByUserName: function(user_name, callback){
-		var sql = "SELECT * FROM `manager` WHERE user_name='"+user_name+"'";
+	getByEmail: function(email, callback){
+		var sql = "SELECT * FROM `manager` WHERE email='"+email+"'";
 		db.getResults(sql, function(results){
-			if(results.length > 0){
-				callback(true);
-			}else{
-				callback(false);
-			}
+			callback(results);
 		});
 	},
 	getById: function(id, callback){

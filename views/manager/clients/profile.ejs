@@ -56,9 +56,9 @@
                 <div class="col col-xl-2 border rounded border-primary">
                     <div class="border-bottom text-center border-sercondary">
                         <img class="mt-2" src="../../assets/img/team/team-1.jpg" alt="No Image.." id="client-pro-pic"><br>
-                        <label class="mt-4" for="">Mr. XYZ</label><br>
-                        <label class="mt-2" for="">Phone: 017........</label><br>
-                        <label for="">Email: abc@gmail.com</label>
+                        <label class="mt-4" for="">Name: <%= user[0].full_name %></label><br>
+                        <label class="mt-2" for="">Phone: <%= user[0].phone %></label><br>
+                        <label for="">Email: <%= user[0].email %></label>
                     </div>
                     <div class="border-top border-primary pt-4">
                         <button class="active btn btn-primary btn-block"><a href="/clients/profile/1"><span class="text-light">Profile</span></a></button><br>
@@ -83,31 +83,51 @@
                                     <tbody>
                                         <tr>
                                             <td>Name : </td>
-                                            <td></td>
+                                            <td><%= user[0].full_name %></td>
                                         </tr>
                                         <tr>
                                             <td>Phone : </td>
-                                            <td></td>
+                                            <td><%= user[0].phone %></td></td>
                                         </tr>
                                         <tr>
                                             <td>Email : </td>
-                                            <td></td>
+                                            <td><%= user[0].email %></td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Address : </td>
+                                            <td><%= user[0].address %></td></td>
                                         </tr>
                                         <tr>
                                             <td>City : </td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>State : </td>
-                                            <td></td>
+                                            <td><%= user[0].city %></td></td>
                                         </tr>
                                         <tr>
                                             <td>Country : </td>
-                                            <td></td>
+                                            <td><%= user[0].country %></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Website : </td>
+                                            <td><%= user[0].website %></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Billing City : </td>
+                                            <td><%= user[0].billing_city %></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Billing State : </td>
+                                            <td><%= user[0].billing_state %></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Billing Zip Code : </td>
+                                            <td><%= user[0].billing_zip %></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Billing Country : </td>
+                                            <td><%= user[0].billing_country %></td>
                                         </tr>
                                         <tr>
                                             <td>Status : </td>
-                                            <td></td>
+                                            <td><%= user[0].status %></td>
                                         </tr>
                                     </tbody>
                                 </table>

@@ -29,5 +29,5 @@ app.get('/', (req, res)=>{
 
 //server startup
 app.listen(port, (error)=>{
-	console.log('server strated at '+port);
+	console.log('Server Started at '+port);
 });

@@ -35,9 +35,11 @@
         <div class="row justify-content-center mt-5 mb-5">
             <div class="col col-sm-7 col-lg-5 col-xl-3 mt-5 mb-5 text-center" id="login-box">
                 <h2>Login Panel</h2><br>
-                <input class="form-control"type="text" placeholder="Email"><br>
-                <input class="form-control"type="text" placeholder="Password"><br>
+                <form method="post" action="/manager/login">
+                  <input class="form-control"type="email" placeholder="Email" name="email"><br>
+                <input class="form-control"type="password" placeholder="Password" name="password"><br>
                 <button class="btn btn-primary btn-block">Login</button><br>
+                </form>
                 <a href="/manager/signup">Want to sign up?</a><br>
                 <a href="/manager/forgot-password">Forgot Your Password?</a>
             </div>

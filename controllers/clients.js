@@ -1,3 +1,4 @@
+const e = require('express');
 const express = require('express');
 const clientModel = require.main.require('./models/clientModel');
 const router = express.Router();
@@ -39,7 +40,7 @@ router.post('/add', (req, res)=>{
             clientModel.insert(client, function(status){
                 if(status==true){
                     clientModel.getByEmail(client.email, function(result){
-                        res.redirect('/clients/profile/:'+result[0].id+'');
+                        res.redirect('/clients/profile/'+result[0].id);
                     })
                 }
                 else{
@@ -59,6 +60,38 @@ router.get('/profile/:id', (req, res) => {
         }
     });
 });
+
+router.get('/profile/edit/:id', (req, res)=>{
+    clientModel.getById(req.params.id, function(result){
+        if(result.length>0){
+            res.render('manager/clients/profile_edit', {user:result});
+        }
+        else{
+            res.redirect('/clients/profile');
+        }
+    })
+});
+router.post('/profile/edit/:id', (req, res)=>{
+    var sql = "UPDATE `clients` SET `full_name`='"+req.body.full_name+"',`email`='"+req.body.email+"',`phone`='"+req.body.phone+"',`address`='"+req.body.address+"',`city`='"+req.body.city+"',`country`='"+req.body.country+"',`website`='"+req.body.website+"', `status`='"+req.body.status+"',`billing_city`='"+req.body.billing_city+"',`billing_state`='"+req.body.billing_state+"',`billing_country`='"+req.body.billing_country+"',`billing_zip`='"+req.body.billing_zip+"' WHERE id='"+req.params.id+"'";
+    clientModel.update(sql,function(status){
+        if(status==true){
+            res.redirect('/clients/profile/'+req.params.id);
+        }
+        else{
+            res.redirect('/clients/profile/edit/'+req.params.id);
+        }
+    });
+})
+router.post('/profile/delete/:id', function(req,res){
+    clientModel.delete(req.params.id, function(status ){
+        if(status==true){
+            res.redirect('/clients');
+        }
+        else{
+            res.redirect('/clients/profile/'+req.params.id);
+        }
+    });
+})
 router.get('/profile/:id/calls', (req, res) => {
     res.render('manager/clients/calls');
 });

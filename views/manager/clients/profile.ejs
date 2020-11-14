@@ -76,7 +76,7 @@
                                 <h5 class="text-light">Profile Details</h5>
                             </div>
                             <div class="col-6 text-right bg-primary  mb-3 pt-3">
-                                <button class="btn btn-success mb-2" onclick="getElementById('profile-section').style.display='none';getElementById('profile-edit-section').style.display='block';">Edit</button>
+                                <button class="btn btn-success mb-2"><a href="/clients/profile/edit/<%= user[0].id %>" class="text-light">Edit</a></button>
                             </div>
                             <div class="col-12">
                                 <table class="table table-bordered">
@@ -128,55 +128,6 @@
                                         <tr>
                                             <td>Status : </td>
                                             <td><%= user[0].status %></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </section>
-                    <section id="profile-edit-section">
-                        <div class="row m-0 p-0">
-                            <div class="col-6 bg-primary  mb-3 pt-3">
-                                <h5 class="text-light">Profile Edit</h5>
-                            </div>
-                            <div class="col-6 text-right bg-primary  mb-3 pt-3">
-                                <button class="btn btn-danger mb-2">Remove Client</button>
-                            </div>
-                            <div class="col-12">
-                                <table class="table table-bordered">
-                                    <tbody>
-                                        <tr>
-                                            <td>Name : </td>
-                                            <td><input class="form-control" type="text" placeholder="Name"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Phone : </td>
-                                            <td><input class="form-control" type="text" placeholder="Phone"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Email : </td>
-                                            <td><input class="form-control" type="text" placeholder="Email"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>City : </td>
-                                            <td><input class="form-control" type="text" placeholder="City"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>State : </td>
-                                            <td><input class="form-control" type="text" placeholder="State"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Country : </td>
-                                            <td><input class="form-control" type="text" placeholder="Country"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Status : </td>
-                                            <td><input class="form-control" type="text" placeholder="Status"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center" colspan="2">
-                                                <button class="btn btn-success" onclick="document.getElementById('profile-edit-section').style.display='none';document.getElementById('profile-section').style.display='block';">Save Changes</button>
-                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>

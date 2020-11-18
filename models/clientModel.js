@@ -29,6 +29,18 @@ module.exports= {
 			callback(results);
 		});
 	},
+	getClientCount: function(callback){
+		var sql = "SELECT COUNT(*) AS clientsCount FROM clients;";
+		db.getResults(sql, function(results){
+			callback(results);
+		});
+	},
+	getActiveClientCount: function(callback){
+		var sql = "SELECT COUNT(*) AS activeClientsCount FROM clients WHERE status = 'Active';";
+		db.getResults(sql, function(results){
+			callback(results);
+		});
+	},
 	insert: function(user, callback){
         var sql = "INSERT INTO `clients`(`id`, `full_name`, `email`, `phone`, `address`, `city`, `country`, `website`, `added_by`, `adding_date`, `status`, `password`, `billing_city`, `billing_state`, `billing_country`, `billing_zip`) VALUES (0,'"+user.full_name+"','"+user.email+"','"+user.phone+"','"+user.address+"','"+user.city+"','"+user.country+"','"+user.website+"','"+user.added_by+"','"+user.adding_date+"','"+user.status+"','"+user.password+"','"+user.billing_city+"','"+user.billing_state+"','"+user.billing_country+"','"+user.billing_zip+"')";
 		db.execute(sql, function(status){

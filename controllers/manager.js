@@ -1,82 +1,96 @@
 const express = require('express');
-const managerModel		= require.main.require('./models/managerModel');
+const managerModel = require.main.require('./models/managerModel');
+const clientModel = require.main.require('./models/clientModel');
 const router = express.Router();
-router.get('/', (req, res)=>{
-    if(req.session.email==null || req.session.email.length<2){
-        res.redirect('/manager/login');
-    }   
-    else{
-        res.render('manager/home/index');
+router.get('/', (req, res) => {
+    if (req.session.email != null) {
+        clientModel.getClientCount(function (clientsCount) {
+            clientModel.getActiveClientCount(function (activeClientsCount) {
+                res.render('manager/home/index', {
+                    clientsCount: clientsCount,
+                    activeClientsCount: activeClientsCount,
+                    full_name : req.session.full_name
+                });
+            })
+        });
+    } else {
+        res.render('manager/home/login');
     }
 });
-router.get('/chat', (req, res)=>{
-    if(req.session.email==null || req.session.email.length<2){
+router.get('/chat', (req, res) => {
+    if (req.session.email == null || req.session.email.length < 2) {
         res.redirect('/manager/login');
-    }
-    else{
+    } else {
         res.render('manager/chat/index');
     }
 });
-router.get('/profile', (req, res)=>{
-    if(req.session.email==null || req.session.email.length<2){
+router.get('/profile', (req, res) => {
+    if (req.session.email == null || req.session.email.length < 2) {
         res.redirect('/manager/login');
-    }
-    else{
-        managerModel.getByEmail(req.session.email, function(result){
-            res.render('manager/profile/index', {user:result});
+    } else {
+        managerModel.getByEmail(req.session.email, function (result) {
+            req.session.user_id = result[0].id;
+            req.session.full_name = result[0].full_name;
+            res.render('manager/profile/index', {
+                user: result,
+                full_name: req.session.full_name
+            });
         });
     }
 });
-router.get('/profile/edit/:id', (req, res)=>{
-    if(req.session.email==null || req.session.email.length<2){
+router.get('/profile/edit/:id', (req, res) => {
+    if (req.session.email == null || req.session.email.length < 2) {
         res.redirect('/manager/login');
-    }
-    else{
-        managerModel.getByEmail(req.session.email, function(result){
-            res.render('manager/profile/edit', {user:result});
-        });        
+    } else {
+        managerModel.getByEmail(req.session.email, function (result) {
+            req.session.full_name = result[0].full_name;
+            res.render('manager/profile/edit', {
+                user: result,
+                full_name: req.session.full_name
+            });
+        });
     }
 });
-router.post('/profile/edit/:email',(req, res) => {
-    if(req.session.email==null || req.session.email.length<2){
+router.post('/profile/edit/:id', (req, res) => {
+    if (req.session.email == null || req.session.email.length < 2) {
         res.redirect('/manager/login');
-    }
-    else{
-        var sql = "UPDATE `manager` SET `full_name`='"+req.body.full_name+"',`phone`='"+req.body.phone+"',`dob`='"+req.body.date+"',`address`='"+req.body.address+"',`city`='"+req.body.city+"',`country`='"+req.body.country+"',`company_name`='"+req.body.company_name+"' WHERE email='"+req.params.email+"'";
-        managerModel.update(sql, function(callback) {
-            if(callback==true){
+    } else {
+        var sql = "UPDATE `manager` SET `full_name`='" + req.body.full_name + "',`phone`='" + req.body.phone + "',`dob`='" + req.body.date + "',`address`='" + req.body.address + "',`city`='" + req.body.city + "',`country`='" + req.body.country + "',`company_name`='" + req.body.company_name + "' WHERE id='" + req.params.id + "'";
+        managerModel.update(sql, function (callback) {
+            if (callback == true) {
                 res.redirect('/manager/profile');
-            }
-            else{
+            } else {
                 res.redirect('/manager/profile');
             }
         });
     }
 });
 
-router.get('/login', (req, res)=>{
+router.get('/login', (req, res) => {
+    req.session.destroy();
     res.render('manager/home/login');
 });
-router.post('/login', (req, res)=>{
+router.post('/login', (req, res) => {
     var user = {
         email: req.body.email,
         password: req.body.password
     };
-    managerModel.validate(user, function(callback) {
-        if(callback==true){
+    managerModel.validate(user, function (callback) {
+        if (callback == true) {
             req.session.email = user.email;
+            //req.session.user_id = user.id;
+            req.session.full_name = user.full_name;
             res.redirect('/manager/profile');
-        }
-        else{
+        } else {
             res.redirect('/login');
         }
     });
 });
-router.get('/signup', (req, res)=>{
+router.get('/signup', (req, res) => {
     res.render('manager/home/sign-up');
 });
 
-router.post('/signup',(req, res) => {
+router.post('/signup', (req, res) => {
     var user = {};
     user.full_name = req.body.full_name;
     user.user_name = req.body.user_name;
@@ -92,32 +106,30 @@ router.post('/signup',(req, res) => {
     user.status = 0;
     user.joining_date = Date.now();
 
-    managerModel.getByUserName(user.user_name,function(results){
-        if(results.length>0){
+    managerModel.getByUserName(user.user_name, function (results) {
+        if (results.length > 0) {
             res.redirect('/manager/signup');
-        }
-        else{
-            managerModel.insert(user, function(status){
-                if(status==true){
+        } else {
+            managerModel.insert(user, function (status) {
+                if (status == true) {
                     res.redirect('/manager/login');
-                }
-                else{
+                } else {
                     res.redirect('/manager/signup');
                 }
             });
         }
     });
 });
-router.get('/forgot-password', (req, res)=>{
+router.get('/forgot-password', (req, res) => {
     res.render('manager/home/forgot-password');
 });
-router.get('/verify-code', (req, res)=>{
+router.get('/verify-code', (req, res) => {
     res.render('manager/home/verify-code');
 });
-router.get('/reset-password', (req, res)=>{
+router.get('/reset-password', (req, res) => {
     res.render('manager/home/reset-password');
 });
-router.get('/signout', (req, res)=>{
+router.get('/signout', (req, res) => {
     req.session.destroy();
     res.redirect('/manager/login');
 });

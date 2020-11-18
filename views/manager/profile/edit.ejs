@@ -31,14 +31,15 @@
 
       <nav class="nav-menu d-none d-lg-block">
         <ul>
-          <li class="active"><a href="/manager">Dashboard</a></li>
-          <li><a href="/clients">Clients</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#portfolio">Appoitments</a></li>
-          <li><a href="/manager/chat">Chat</a></li>
-          <li><a href="#pricing">Transactions</a></li>
-          <li><a href="/manager/profile">Profile</a></li>
-          <li><a href="/manager/signout">Sign Out</a></li>
+          <% if(full_name!=null) { %>
+            <li class="active"><a href="/manager">Dashboard</a></li>
+            <li><a href="/clients">Clients</a></li>
+            <li><a href="/manager/chat">Chat</a></li>
+            <li><a href="/manager/profile">Profile</a></li>
+            <li><a href="/manager/signout">Sign Out</a></li>
+          <% } else { %>
+            <li><a href="/manager/login">Sign In</a></li>
+          <% } %>
 
         </ul>
       </nav><!-- .nav-menu -->
@@ -55,7 +56,7 @@
       <div class="row justify-content-center">
         <div class="col col-xl-5 mt-3">
           <div id="manager-profile-box">
-            <form action="/manager/profile/edit/<%= user[0].email %>" method="post">
+            <form action="/manager/profile/edit/<%= user[0].id %>" method="post">
               <div class="bg-primary text-light pt-3 pb-2 pl-2">
                 <div class="row justify-content-between">
                   <div class="col-4">
@@ -84,7 +85,7 @@
                   </tr>
                   <tr>
                     <td>Phone : </td>
-                    <td><input class="form-control" type="number" value="<%= user[0].phone %>" name="phone"></td>
+                    <td><input class="form-control" type="number" value="0<%= user[0].phone %>" name="phone"></td>
                   </tr>
                   <tr>
                     <td>Date of Birth : </td>
@@ -107,7 +108,6 @@
                     <td><input class="form-control" type="date" value="<%= user[0].joining_date %>" name="joining_date">
                     </td>>
                   </tr>
-
                 </tbody>
               </table>
             </form>

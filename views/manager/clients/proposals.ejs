@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
 </head>
 
-<body onload="clientBodyLoader();">
+<body>
     <header id="header" class="fixed-top">
         <div class="container d-flex align-items-center">
 
@@ -31,18 +31,18 @@
 
             <nav class="nav-menu d-none d-lg-block">
                 <ul>
-                    <li><a href="/manager">Dashboard</a></li>
-                    <li class="active"><a href="/clients">Clients</a></li>
-                    <li><a href="#services">Services</a></li>
-                    <li><a href="#portfolio">Appoitments</a></li>
-                    <li><a href="#team">Notes</a></li>
-                    <li><a href="#pricing">Transactions</a></li>
-                    <li><a href="#contact">Contact</a></li>
-
+                  <% if(full_name!=null) { %>
+                    <li class="active"><a href="/manager">Dashboard</a></li>
+                    <li><a href="/clients">Clients</a></li>
+                    <li><a href="/manager/chat">Chat</a></li>
+                    <li><a href="/manager/profile">Profile</a></li>
+                    <li><a href="/manager/signout">Sign Out</a></li>
+                  <% } else { %>
+                    <li><a href="/manager/login">Sign In</a></li>
+                  <% } %>
+        
                 </ul>
-            </nav><!-- .nav-menu -->
-
-            <a href="#about" class="get-started-btn scrollto">Get Started</a>
+              </nav><!-- .nav-menu -->
 
         </div>
     </header><!-- End Header -->
@@ -195,9 +195,7 @@
 
     <script>
         $(document).ready(function () {
-            $('#callsTable').DataTable();
             $('#appointmentsTable').DataTable();
-            //$('#callsTable').DataTable();
         });
         $(function () {
             $('[data-toggle="popover"]').popover()

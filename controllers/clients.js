@@ -1,8 +1,10 @@
 const e = require('express');
 const express = require('express');
 const clientModel = require.main.require('./models/clientModel');
+const managerModel = require.main.require('./models/managerModel');
 const noteModel = require.main.require('./models/noteModel');
 const appointmentModel = require.main.require('./models/appointmentModel');
+const proposalModel = require.main.require('./models/proposalModel');
 const router = express.Router();
 router.get('/', (req, res) => {
     if (req.session.email == null || req.session.email.length < 2) {
@@ -264,9 +266,63 @@ router.get('/profile/:id/proposals', (req, res) => {
     if (req.session.email == null || req.session.email.length < 2) {
         res.redirect('/manager/login');
     }else{
-        res.render('manager/clients/proposals');
+        proposalModel.getById(req.params.id, function (allProposals) {
+            clientModel.getById(req.params.id, function(result){
+                res.render('manager/clients/proposals', {
+                    user: result,
+                    allNotes: allProposals,
+                    full_name: req.session.full_name
+                });
+            });
+        });
     }
 });
+router.post('/profile/:id/proposals', function(req, res){
+    if (req.session.email == null || req.session.email.length < 2) {
+        res.redirect('/manager/login');
+    }else{
+        if(req.session.user_id==null){
+            res.redirect('/manager/login');
+        }
+        else{
+            var proposals = {};
+            proposals.title = req.body.title;
+            proposals.subject = req.body.subject;
+            proposals.body = req.body.body;
+            proposals.customer_name = req.body.customer_name;
+            proposals.starting_date = req.body.starting_date;
+            proposals.deadline_date = req.body.deadline_date;
+            proposals.status = req.body.status;
+            proposals.address = req.body.address;
+            proposals.city = req.body.city;
+            proposals.state = req.body.state;
+            proposals.zip_code = req.body.zip_code;
+            proposals.email = req.body.email;
+            proposals.phone = req.body.phone;
+            proposals.item = req.body.item;
+            proposals.quantity = req.body.quantity;
+            proposals.rate = req.body.rate;
+            
+            proposals.company_id = req.body.company_id;
+            proposals.clients_id = req.params.id;
+            proposals.manager_id = req.session.user_id;
+            console.log(proposals);
+            managerModel.getAssociates(req.params.id, function(result) {
+                console.log(result);
+            });
+            /*
+            appointmentModel.insert(appointment,function(status){
+                if(status == true){
+                    res.redirect('/clients/profile/'+req.params.id+'/appointments');
+                }
+                else{
+                    res.redirect('/clients/profile/'+req.params.id+'/appointments');
+                }
+            });
+            */
+        }
+    }
+})
 router.get('/profile/:id/chat', (req, res) => {
     if (req.session.email == null || req.session.email.length < 2) {
         res.redirect('/manager/login');

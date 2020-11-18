@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Manager Profile</title>
+  <title>Company Management</title>
   <meta content="" name="descriptison">
   <meta content="" name="keywords">
 
@@ -28,7 +28,6 @@
     <div class="container d-flex align-items-center">
 
       <h1 class="logo mr-auto"><a href="/manager">CRM Spot</a></h1>
-
       <nav class="nav-menu d-none d-lg-block">
         <ul>
           <% if(full_name!=null) { %>
@@ -45,7 +44,6 @@
         </ul>
       </nav><!-- .nav-menu -->
 
-
     </div>
   </header><!-- End Header -->
 
@@ -59,57 +57,31 @@
             <div class="bg-primary text-light pt-3 pb-2 pl-2">
               <div class="row justify-content-between">
                 <div class="col-4">
-                  <h5 class="text-left">Welcome, Manager</h5>
+                  <h5 class="text-left">Company Details</h5>
                 </div>
                 <div class="col-4 text-right">
-                  <button class="btn btn-warning mr-1"><a href="/manager/profile/edit/1">Edit</a></button>
+                  <button class="btn btn-warning mr-1"><a href="/manager/company/edit/<%= user[0].id %>">Edit</a></button>
                 </div>
               </div>
-            </div>
-            <div class="text-center mt-3 mb-2">
-              <img src="/assets/img/team/team-1.jpg" alt="No Image.." id="manager-profile-pic"><br><br>
-              <button class="btn btn-success btn-sm">Upload Profile Pic</button>
-              <button class="btn btn-danger btn-sm">Remove Profile Pic</button><br><br>
             </div>
             <table id="appointmentsTable" class="table table-striped table-bordered" style="width:100%">
               <tbody>
                 <tr>
-                  <td>Full Name : </td>
-                  <td> <%= user[0].full_name %></td>
-                </tr>
-                <tr>
-                  <td>User Name : </td>
-                  <td> <%= user[0].user_name %></td>
-                </tr>
-                <tr>
-                  <td>Company Name : </td>
+                  <td>Company Name</td>
                   <td> <%= user[0].company_name %></td>
                 </tr>
                 <tr>
-                  <td>Email : </td>
-                  <td> <%= user[0].email %></td>
-                </tr>
-                <tr>
-                  <td>Phone : </td>
-                  <td> 0<%= user[0].phone %></td>
-                </tr>
-                <tr>
-                  <td>Date of Birth : </td>
-                  <td> <%= user[0].dob %></td>
-                </tr>
-                <tr>
                   <td>Address : </td>
-                  <td> <%= user[0].address %></td>
+                  <td> <%= user[0].company_address %></td>
                 </tr>
                 <tr>
-                  <td>City : </td>
-                  <td> <%= user[0].city %></td>
+                  <td>Contact Number</td>
+                  <td> 0<%= user[0].contact_number %></td>
                 </tr>
                 <tr>
-                  <td>Joining Date : </td>
-                  <td> <%= user[0].joining_date %></td>
+                  <td>Type : </td>
+                  <td> <%= user[0].type %></td>
                 </tr>
-
               </tbody>
             </table>
           </div>

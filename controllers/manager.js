@@ -1,5 +1,6 @@
 const express = require('express');
 const managerModel = require.main.require('./models/managerModel');
+const companyModel = require.main.require('./models/companyModel');
 const clientModel = require.main.require('./models/clientModel');
 const router = express.Router();
 router.get('/', (req, res) => {
@@ -15,6 +16,53 @@ router.get('/', (req, res) => {
         });
     } else {
         res.render('manager/home/login');
+    }
+});
+router.get('/company', function(req, res) {
+    if(req.session.email==null){
+        res.redirect('/manager/login');
+    }
+    else{
+        if(req.session.email==null){
+            res.redirect('/manager/login');
+        }
+        else{
+            companyModel.getByManagerID(req.session.user_id, function (result){
+                res.render('manager/company/index', {user: result, full_name:req.session.full_name});
+            });
+        }
+    }
+});
+router.get('/company/edit/:id', (req, res) => {
+    if (req.session.email == null || req.session.email.length < 2) {
+        res.redirect('/manager/login');
+    } else {
+        companyModel.getByManagerID(req.session.user_id, function (result) {
+            res.render('manager/company/edit', {
+                user: result,
+                full_name: req.session.full_name
+            });
+        });
+    }
+});
+router.post('/company/edit/:id', (req, res) => {
+    if (req.session.email == null || req.session.email.length < 2) {
+        res.redirect('/manager/login');
+    } else {
+        company = {};
+        company.id = req.params.id;
+        company.name = req.body.company_name;
+        company.address = req.body.address;
+        company.phone = req.body.phone;
+        company.type = req.body.type;
+
+        companyModel.update(company, function (callback) {
+            if (callback == true) {
+                res.redirect('/manager/company');
+            } else {
+                res.redirect('/manager/company');
+            }
+        });
     }
 });
 router.get('/chat', (req, res) => {
@@ -106,13 +154,21 @@ router.post('/signup', (req, res) => {
     user.status = 0;
     user.joining_date = Date.now();
 
-    managerModel.getByUserName(user.user_name, function (results) {
+    var company = {};
+    company.name = req.body.company_name;
+
+    managerModel.getByEmail(user.email, function (results) {
         if (results.length > 0) {
             res.redirect('/manager/signup');
         } else {
             managerModel.insert(user, function (status) {
                 if (status == true) {
-                    res.redirect('/manager/login');
+                    managerModel.getByEmail(user.email, function (result){ 
+                        company.manager_id = result[0].id;
+                        companyModel.insert(company, function (status) {
+                            res.redirect('/manager/login');
+                        });
+                    });
                 } else {
                     res.redirect('/manager/signup');
                 }

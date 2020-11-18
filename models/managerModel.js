@@ -17,6 +17,12 @@ module.exports= {
 			callback(results);
 		});
 	},
+	getAssociates: function(id, callback){
+		var sql = "SELECT c.id, m.id, cl.id FROM company as c LEFT JOIN manager as m on c.id=m.id LEFT JOIN clients as cl on m.id = cl.id WHERE cl.id = '"+id+"'";
+		db.getResults(sql, function(results){
+			callback(results);
+		});
+	},
 	getById: function(id, callback){
 		var sql = "select * from manager where id='"+id+"'";
 		db.getResults(sql, function(results){

@@ -14,14 +14,14 @@ module.exports= {
 		});
 	},
 	insert: function(appointment, callback){
-		var sql = "INSERT INTO `appointment`(`id`, `title`, `body`, `creation_date`, `appointment_date`, `manger_id`, `clients_id`) VALUES (0,'"+appointment.title+"','"+appointment.body+"','"+appointment.creation_date+"','"+appointment.appointment_date+"','"+appointment.manager_id+"','"+appointment.clients_id+"')";
+		var sql = "INSERT INTO `appointment`(`id`, `title`, `body`, `creation_date`, `appointment_date`, `manager_id`, `clients_id`) VALUES (0,'"+appointment.title+"','"+appointment.body+"','"+appointment.creation_date+"','"+appointment.appointment_date+"','"+appointment.manager_id+"','"+appointment.clients_id+"')";
 		console.log(sql);
 		db.execute(sql, function(status){
 			callback(status);
 		});
 	},
-	update:function(note, callback){
-		var sql="UPDATE `appointment` SET `title`='"+note.title+"',`body`='"+note.body+"',`manager_id`='"+note.manager_id+"',`client_id`='"+note.client_id+"',`creation_date`='"+note.date+"' WHERE id='"+note.id+"'";
+	update:function(appointment, callback){
+		var sql="UPDATE `appointment` SET `title`='"+appointment.title+"',`body`='"+appointment.body+"',`creation_date`='"+appointment.creation_date+"',`appointment_date`='"+appointment.appointment_date+"',`manager_id`='"+appointment.manager_id+"',`clients_id`='"+appointment.clients_id+"' WHERE clients_id='"+appointment.clients_id+"'";
 		console.log(sql);
 		db.execute(sql, function(status){
 			callback(status);

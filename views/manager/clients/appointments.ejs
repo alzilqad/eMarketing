@@ -146,7 +146,7 @@
                                                     data-content="<%= allNotes[i].body %>"><u><%= allNotes[i].title %></u></a>
                                             </td>
                                             <td>
-                                                <form action="/clients/profile/<%= user[0].id %>/notes/edit/<%= allNotes[i].id %>" method="post">
+                                                <form action="/clients/profile/<%= user[0].id %>/appointments/edit/<%= allNotes[i].id %>" method="post">
                                                 <!-- Button trigger modal -->
                                                 <button type="button" class="btn btn-block btn-info" data-toggle="modal"
                                                     data-target="#editModal">
@@ -170,6 +170,8 @@
                                                                     <div class="col">
                                                                         <input class="form-control" type="date" placeholder="Date"
                                                                             name="date" value="<%= allNotes[i].creation_date %>"><br>
+                                                                            <input class="form-control" type="date" placeholder="Date"
+                                                                            name="appointment_date" value="<%= allNotes[i].appointment_date %>"><br>
                                                                         <input class="form-control" type="text" placeholder="Title"
                                                                             name="title" value="<%= allNotes[i].title %>"><br>
                                                                         <input class="form-control" placeholder="Body"

@@ -166,6 +166,29 @@ router.post('/profile/:id/appointments', (req, res) => {
         }
     }
 });
+router.post('/profile/:user_id/appointments/edit/:id', function(req, res){
+    if(req.session.email==null){
+        res.redirect('/manager/login');
+    }
+    else{
+        appointment = {};
+        appointment.id = req.params.id;
+        appointment.body =  req.body.body;
+        appointment.title = req.body.title;
+        appointment.creation_date = req.body.date;
+        appointment.appointment_date = req.body.appointment_date;
+        appointment.clients_id = req.params.user_id;
+        appointment.manager_id = req.session.user_id;
+        appointmentModel.update(appointment, function(status){
+            if(status==true){
+                res.redirect('/clients/profile/'+req.params.user_id+'/appointments');
+            }
+            else{
+                res.redirect('/clients/profile/'+req.params.user_id+'/appointments');
+            }
+        });
+    }
+});
 router.get('/profile/:id/notes', (req, res) => {
     if(req.session.email == null || req.session.email.length < 2){
         res.redirect('/manager/login');

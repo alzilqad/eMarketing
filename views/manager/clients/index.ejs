@@ -36,6 +36,7 @@
                     <li class="active"><a href="/manager">Dashboard</a></li>
                     <li><a href="/clients">Clients</a></li>
                     <li><a href="/manager/company">Company</a></li>
+                    <li><a href="/manager/company/services">Services</a></li>
                     <li><a href="/manager/chat">Chat</a></li>
                     <li><a href="/manager/profile">Profile</a></li>
                     <li><a href="/manager/signout">Sign Out</a></li>
@@ -138,7 +139,7 @@
                             <tr>
                                 <td><a href="/clients/profile/<%= users[i].id %>"><%= users[i].full_name %></a></td>
                                 <td><%= users[i].email %></td>
-                                <td><%= users[i].phone %></td>
+                                <td>0<%= users[i].phone %></td>
                                 <td><%= users[i].added_by %></td>
                                 <td><%= users[i].status %></td>
                             </tr>

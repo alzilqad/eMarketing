@@ -31,6 +31,7 @@
           <% if(full_name!=null) { %>
             <li class="active"><a href="/manager">Dashboard</a></li>
             <li><a href="/clients">Clients</a></li>
+            <li><a href="/manager/company/services">Services</a></li>
             <li><a href="/manager/chat">Chat</a></li>
             <li><a href="/manager/profile">Profile</a></li>
             <li><a href="/manager/signout">Sign Out</a></li>
@@ -58,8 +59,9 @@
                   <button class="btn btn-link border-light mb-1"><a class="text-center text-light  text-decoration-none" href="/clients">Manage Clients</a></button>
                 </div>
                 <div class="col-4 manager-dashboard-boxes text-center pt-5" style="background: #5F9F9F;">
-                  <h6 class="mb-5">Total Services: 0</h6>
-                  <h6 class="mb-5">Active Services: 0</h6>
+                  
+                  <h6 class="mb-5">Total Services: <span class="h1"><b><i><%= servicesCount[0].serviceCount %></i></b></span></h6>
+                  <h6 class="mb-5">Available Services: <span class="h1"><b><i><%= activeServicesCount[0].serviceCount %></i></b></span></h6>
                   <button class="btn btn-link border-light mb-1"><a class="text-center text-light  text-decoration-none" href="/clients">Manage Services</a></button>
                 </div>
                 <div class="col-4 manager-dashboard-boxes text-center pt-5" style="background: #7A67EE;">

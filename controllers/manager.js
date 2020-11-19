@@ -2,15 +2,22 @@ const express = require('express');
 const managerModel = require.main.require('./models/managerModel');
 const companyModel = require.main.require('./models/companyModel');
 const clientModel = require.main.require('./models/clientModel');
+const servicesModel = require.main.require('./models/servicesModel');
 const router = express.Router();
 router.get('/', (req, res) => {
     if (req.session.email != null) {
         clientModel.getClientCount(function (clientsCount) {
             clientModel.getActiveClientCount(function (activeClientsCount) {
-                res.render('manager/home/index', {
-                    clientsCount: clientsCount,
-                    activeClientsCount: activeClientsCount,
-                    full_name : req.session.full_name
+                servicesModel.getServiceCount(function (servicesCount){
+                    servicesModel.getActiveServiceCount(function (activeServicesCount){
+                        res.render('manager/home/index', {
+                            clientsCount: clientsCount,
+                            activeClientsCount: activeClientsCount,
+                            full_name : req.session.full_name,
+                            servicesCount: servicesCount,
+                            activeServicesCount:activeServicesCount
+                        });
+                    });
                 });
             })
         });
@@ -125,10 +132,22 @@ router.post('/login', (req, res) => {
     };
     managerModel.validate(user, function (callback) {
         if (callback == true) {
-            req.session.email = user.email;
-            //req.session.user_id = user.id;
-            req.session.full_name = user.full_name;
-            res.redirect('/manager/profile');
+            managerModel.getByEmail(user.email, function(result) {
+                user.id = result[0].id;
+                user.full_name = result[0].full_name;
+                user.type = result[0].type;
+
+                req.session.email = user.email;
+                req.session.user_id = user.id;
+                req.session.full_name = user.full_name;
+
+                
+                companyModel.getByManagerID(user.id, function (result){
+                    req.session.com_id = result[0].id;
+                    res.redirect('/manager/profile');
+                });
+                
+            });
         } else {
             res.redirect('/login');
         }
@@ -188,5 +207,74 @@ router.get('/reset-password', (req, res) => {
 router.get('/signout', (req, res) => {
     req.session.destroy();
     res.redirect('/manager/login');
+});
+router.get('/company/services', (req, res) => {
+    if (req.session.email != null) {
+            servicesModel.getByCompanyID(req.session.com_id,function (result) {
+                res.render('manager/company/services', {
+                    full_name : req.session.full_name,
+                    user : result
+                });
+        });
+    } else {
+        res.redirect('/manager/login');
+    }
+});
+router.post('/company/services/add', (req, res)=>{
+    if(req.session.email!=null){
+        var service = {};
+        service.company_id = req.session.com_id;
+        service.name = req.body.name;
+        service.type = req.body.type;
+        service.cost = req.body.cost;
+        service.status = req.body.status;
+        servicesModel.insert(service, function(status) {
+            if(status == true){
+                res.redirect('/manager/company/services');
+            }
+            else{
+                res.redirect('/manager/company/services');
+            }
+        });
+    }
+    else{
+        res.redirect('/manager/login');
+    }
+})
+router.get('/company/services/delete/:id', function(req, res){
+    if(req.session.email==null){
+        res.redirect('/manager/login');
+    }
+    else{
+        servicesModel.delete(req.params.id, function(status){
+            if(status==true){
+                res.redirect('/manager/company/services');
+            }
+            else{
+                res.redirect('/manager/company/services');
+            }
+        });
+    }
+});
+router.post('/company/services/edit/:id', (req, res)=>{
+    if (req.session.email==null){
+        res.redirect('/manager/login');
+    }
+    else{
+        var service = {};
+        service.name = req.body.name;
+        service.type = req.body.type;
+        service.cost = req.body.cost;
+        service.status = req.body.status
+        service.id = req.params.id;
+        servicesModel.update(service, function (callback){
+            if(callback == true){
+                res.redirect('/manager/company/services');
+            }
+            else{
+                res.redirect('/manager/company/services');res.redirect('/manager/company/services');
+            }
+        });
+    }
 });
 module.exports = router;

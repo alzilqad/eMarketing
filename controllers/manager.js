@@ -196,10 +196,32 @@ router.post('/signup', (req, res) => {
     });
 });
 router.get('/forgot-password', (req, res) => {
+    req.session.destroy();
     res.render('manager/home/forgot-password');
 });
+router.post('/forgot-password', (req, res) => {
+    managerModel.getByEmail(req.body.email, function(result) {
+        if(result.length > 0){
+            req.session.user_id = result[0].id;
+            req.session.user_name = result[0].full_name;
+            req.session.password = result[0].password;
+            res.redirect('/manager/verify-code');
+        }
+        else{
+            res.redirect('/manager/forgot-password');
+        }
+    });
+});
 router.get('/verify-code', (req, res) => {
-    res.render('manager/home/verify-code');
+    if(req.session.user_name==null){
+        res.redirect('/manager/forgot-password');
+    }
+    else{
+        res.render('manager/home/verify-code', {
+            user_name: req.session.user_name,
+            user_id: req.session.user_id
+        });
+    }
 });
 router.get('/reset-password', (req, res) => {
     res.render('manager/home/reset-password');

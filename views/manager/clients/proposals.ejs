@@ -22,6 +22,11 @@
     <link href="/assets/vendor/aos/aos.css" rel="stylesheet">
     <link href="/assets/css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
+    <style>
+        #proposalTable {
+            display: none;
+        }
+    </style>
 </head>
 
 <body>
@@ -54,7 +59,7 @@
     <main id="main">
         <section>
             <div class="row mt-4 justify-content-center">
-                <div class="col col-xl-2 border rounded border-primary">
+                <div class="col col-xl-2 border rounded border-primary" id="navigationInfo">
                     <div class="border-bottom text-center border-sercondary">
                         <img class="mt-2" src="/assets/img/team/team-1.jpg" alt="No Image.." id="client-pro-pic"><br>
                         <label class="mt-4" for=""><%= user[0].full_name %></label><br>
@@ -109,38 +114,40 @@
                                                 <div class="modal-body">
                                                     <div class="row">
                                                         <div class="col">
+                                                            <input class="form-control" type="text" placeholder="Title"
+                                                                name="title"><br>
                                                             <input class="form-control" type="text"
-                                                                placeholder="Subject"><br>
+                                                                placeholder="Subject" name="subject"><br>
+                                                            <input class="form-control" type="text" placeholder="Body"
+                                                                name="body"><br>
                                                             <input class="form-control" type="text"
-                                                                placeholder="Title"><br>
+                                                                placeholder="Customer" name="customer_name"><br>
+                                                            <input class="form-control" type="text" placeholder="Date"
+                                                                name="starting_date"><br>
                                                             <input class="form-control" type="text"
-                                                                placeholder="Customer"><br>
+                                                                placeholder="Deadline Date" name="deadline_date"><br>
+                                                            <input class="form-control" type="text" placeholder="Status"
+                                                                name="status"><br>
                                                             <input class="form-control" type="text"
-                                                                placeholder="Date"><br>
+                                                                placeholder="Address" name="address"><br>
+                                                            <input class="form-control" type="text" placeholder="City"
+                                                                name="city"><br>
+                                                            <input class="form-control" type="text" placeholder="State"
+                                                                name="state"><br>
                                                             <input class="form-control" type="text"
-                                                                placeholder="Deadline Date"><br>
+                                                                placeholder="Country" name="country"><br>
                                                             <input class="form-control" type="text"
-                                                                placeholder="Status"><br>
+                                                                placeholder="Zip Code" name="zip_code"><br>
+                                                            <input class="form-control" type="text" placeholder="Email"
+                                                                name="email"><br>
+                                                            <input class="form-control" type="text" placeholder="Phone"
+                                                                name="phone"><br>
                                                             <input class="form-control" type="text"
-                                                                placeholder="Address"><br>
+                                                                placeholder="Select Item" name="item"><br>
                                                             <input class="form-control" type="text"
-                                                                placeholder="City"><br>
+                                                                placeholder="Quantity" name="quantity"><br>
                                                             <input class="form-control" type="text"
-                                                                placeholder="State"><br>
-                                                            <input class="form-control" type="text"
-                                                                placeholder="Country"><br>
-                                                            <input class="form-control" type="text"
-                                                                placeholder="Zip Code"><br>
-                                                            <input class="form-control" type="text"
-                                                                placeholder="Email"><br>
-                                                            <input class="form-control" type="text"
-                                                                placeholder="Phone"><br>
-                                                            <input class="form-control" type="text"
-                                                                placeholder="Select Item"><br>
-                                                            <input class="form-control" type="text"
-                                                                placeholder="Quantity"><br>
-                                                            <input class="form-control" type="text"
-                                                                placeholder="Price Rate Pcs"><br>
+                                                                placeholder="Price Rate Pcs" name="rate"><br>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -159,22 +166,127 @@
                                     style="width:100%">
                                     <thead>
                                         <tr>
-                                            <th>Date</th>
                                             <th>Title</th>
-                                            <th>Created By</th>
+                                            <th>Subject</th>
+                                            <th>Posted Date</th>
+                                            <th>Deadline</th>
+                                            <th>Item</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
+                                    <% if(allNotes[0]!=null) { %>
+                                        <% for(var i = 0; i < allNotes.length; i++) { %>
                                     <tbody>
                                         <tr>
-                                            <td>abcd</td>
-                                            <td><a href="#">defg</a></td>
-                                            <td>hijk</td>
-                                            <td>Status</td>
-                                            <td class="text-center"><button class="btn btn-info ">Edit</button>
-                                                <button class="btn btn-danger ">Delete</button></td>
+                                            <td><%= allNotes[i].title %></td>
+                                            <td><%= allNotes[i].subject %></td>
+                                            <td><%= allNotes[i].starting_date %></td>
+                                            <td><%= allNotes[i].deadline_date %></td>
+                                            <td><%= allNotes[i].item %></td>
+                                            <td><%= allNotes[i].status %></td>
+                                            <td class="text-center">
+                                                <!-- Button trigger modal -->
+                                                <button type="button" class="btn btn-block btn-warning"
+                                                    data-toggle="modal" data-target="#exampleModalCenter">
+                                                    Edit
+                                                </button><br>
+
+                                                <!-- Modal -->
+                                                <form
+                                                    action="/clients/profile/<%= user[0].id %>/proposals/edit/<%= allNotes[i].id %>"
+                                                    method="post">
+                                                    <div class="modal fade" id="exampleModalCenter" tabindex="-1"
+                                                        role="dialog" aria-labelledby="exampleModalCenterTitle"
+                                                        aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="exampleModalLongTitle">
+                                                                        Edit Proposal</h5>
+                                                                    <button type="button" class="close"
+                                                                        data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="row">
+                                                                        <div class="col">
+                                                                            <input class="form-control" type="text"
+                                                                                placeholder="Title" name="title"
+                                                                                value="<%= allNotes[i].title %>"><br>
+                                                                            <input class="form-control" type="text"
+                                                                                placeholder="Subject" name="subject"
+                                                                                value="<%= allNotes[i].subject %>"><br>
+                                                                            <input class="form-control" type="text"
+                                                                                placeholder="Body" name="body"
+                                                                                value="<%= allNotes[i].body %>"><br>
+                                                                            <input class="form-control" type="text"
+                                                                                placeholder="Customer"
+                                                                                name="customer_name"
+                                                                                value="<%= allNotes[i].customer_name %>"><br>
+                                                                            <input class="form-control" type="text"
+                                                                                placeholder="Date" name="starting_date"
+                                                                                value="<%= allNotes[i].starting_date %>"><br>
+                                                                            <input class="form-control" type="text"
+                                                                                placeholder="Deadline Date"
+                                                                                name="deadline_date"
+                                                                                value="<%= allNotes[i].deadline_date %>"><br>
+                                                                            <input class="form-control" type="text"
+                                                                                placeholder="Status" name="status"
+                                                                                value="<%= allNotes[i].status %>"><br>
+                                                                            <input class="form-control" type="text"
+                                                                                placeholder="Address" name="address"
+                                                                                value="<%= allNotes[i].address %>"><br>
+                                                                            <input class="form-control" type="text"
+                                                                                placeholder="City" name="city"
+                                                                                value="<%= allNotes[i].city %>"><br>
+                                                                            <input class="form-control" type="text"
+                                                                                placeholder="State" name="state"
+                                                                                value="<%= allNotes[i].state %>"><br>
+                                                                            <input class="form-control" type="text"
+                                                                                placeholder="Country" name="country"
+                                                                                value="<%= allNotes[i].country %>"><br>
+                                                                            <input class="form-control" type="text"
+                                                                                placeholder="Zip Code" name="zip_code"
+                                                                                value="<%= allNotes[i].zip_country %>"><br>
+                                                                            <input class="form-control" type="text"
+                                                                                placeholder="Email" name="email"
+                                                                                value="<%= allNotes[i].email %>"><br>
+                                                                            <input class="form-control" type="text"
+                                                                                placeholder="Phone" name="phone"
+                                                                                value="<%= allNotes[i].phone %>"><br>
+                                                                            <input class="form-control" type="text"
+                                                                                placeholder="Select Item" name="item"
+                                                                                value="<%= allNotes[i].item %>"><br>
+                                                                            <input class="form-control" type="text"
+                                                                                placeholder="Quantity" name="quantity"
+                                                                                value="<%= allNotes[i].quantity %>"><br>
+                                                                            <input class="form-control" type="text"
+                                                                                placeholder="Price Rate Pcs" name="rate"
+                                                                                value="<%= allNotes[i].rate %>"><br>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-warning"
+                                                                        data-dismiss="modal">Close</button>
+                                                                    <button type="submit" class="btn btn-success">Save
+                                                                        changes</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+
+                                                <a class="btn btn-block btn-danger"
+                                                    href="/clients/profile/<%= user[0].id %>/proposals/delete/<%= allNotes[i].id %>">Delete</a>
+                                                <a href="/clients/profile/<%= user[0].id %>/proposal/<%= allNotes[i].id %>" class="btn btn-block btn-primary ">Download PDF</a>
+                                            </td>
                                         </tr>
+
+                                        <% } %>
+                                        <% } %>
                                     </tbody>
                                 </table>
                             </div>
@@ -222,7 +334,6 @@
     <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
     <script src="/assets/js/clientProfile.js"></script>
-
 
     <script>
         $(document).ready(function () {

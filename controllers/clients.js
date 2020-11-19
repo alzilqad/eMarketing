@@ -1,7 +1,6 @@
 const e = require('express');
 const express = require('express');
 const clientModel = require.main.require('./models/clientModel');
-const managerModel = require.main.require('./models/managerModel');
 const noteModel = require.main.require('./models/noteModel');
 const appointmentModel = require.main.require('./models/appointmentModel');
 const proposalModel = require.main.require('./models/proposalModel');
@@ -268,11 +267,21 @@ router.get('/profile/:id/proposals', (req, res) => {
     }else{
         proposalModel.getById(req.params.id, function (allProposals) {
             clientModel.getById(req.params.id, function(result){
+                if(result.length > 0){
                 res.render('manager/clients/proposals', {
                     user: result,
                     allNotes: allProposals,
                     full_name: req.session.full_name
                 });
+                }
+                else{
+                    
+                res.render('manager/clients/proposals', {
+                    user: result,
+                    allNotes: null,
+                    full_name: req.session.full_name
+                });
+                }
             });
         });
     }
@@ -293,6 +302,7 @@ router.post('/profile/:id/proposals', function(req, res){
             proposals.starting_date = req.body.starting_date;
             proposals.deadline_date = req.body.deadline_date;
             proposals.status = req.body.status;
+            proposals.country = req.body.country;
             proposals.address = req.body.address;
             proposals.city = req.body.city;
             proposals.state = req.body.state;
@@ -303,31 +313,83 @@ router.post('/profile/:id/proposals', function(req, res){
             proposals.quantity = req.body.quantity;
             proposals.rate = req.body.rate;
             
-            proposals.company_id = req.body.company_id;
-            proposals.clients_id = req.params.id;
+            proposals.company_id = req.session.user_id;
+            proposals.client_id = req.params.id;
             proposals.manager_id = req.session.user_id;
-            console.log(proposals);
-            managerModel.getAssociates(req.params.id, function(result) {
-                console.log(result);
-            });
-            /*
-            appointmentModel.insert(appointment,function(status){
+            //console.log(proposals);
+            proposalModel.insert(proposals,function(status){
                 if(status == true){
-                    res.redirect('/clients/profile/'+req.params.id+'/appointments');
+                    res.redirect('/clients/profile/'+req.params.id+'/proposals');
                 }
                 else{
-                    res.redirect('/clients/profile/'+req.params.id+'/appointments');
+                    res.send('Could not add  the proposal!');
                 }
             });
-            */
         }
     }
 })
-router.get('/profile/:id/chat', (req, res) => {
+router.get('/profile/:user_id/proposals/delete/:id', function(req, res){
+    proposalModel.delete(req.params.id, function(status){
+        if(status==true){
+            res.redirect('/clients/profile/'+req.params.user_id+'/proposals');
+        }else{
+            res.send('Could not delete the note');
+        }
+    })
+});
+router.post('/profile/:user_id/proposals/edit/:id', function(req, res){
+    if(req.session.email==null){
+        res.redirect('/manager/login');
+    }
+    else{
+        var proposals = {};
+            proposals.title = req.body.title;
+            proposals.subject = req.body.subject;
+            proposals.body = req.body.body;
+            proposals.customer_name = req.body.customer_name;
+            proposals.starting_date = req.body.starting_date;
+            proposals.deadline_date = req.body.deadline_date;
+            proposals.status = req.body.status;
+            proposals.country = req.body.country;
+            proposals.address = req.body.address;
+            proposals.city = req.body.city;
+            proposals.state = req.body.state;
+            proposals.zip_code = req.body.zip_code;
+            proposals.email = req.body.email;
+            proposals.phone = req.body.phone;
+            proposals.item = req.body.item;
+            proposals.quantity = req.body.quantity;
+            proposals.rate = req.body.rate;
+            
+            proposals.client_id = req.params.user_id;
+            
+            console.log(proposals);
+        proposalModel.update(proposals, function(status){
+            if(status==true){
+                res.redirect('/clients/profile/'+req.params.user_id+'/proposals');
+            }
+            else{
+                res.redirect('/clients/profile/'+req.params.user_id+'/proposals');
+            }
+            
+        });
+    }
+});
+router.get('/profile/:user_id/proposal/:id', (req, res) => {
     if (req.session.email == null || req.session.email.length < 2) {
         res.redirect('/manager/login');
     }else{
-        res.render('manager/clients/chat');
+        proposalModel.getByProposalId(req.params.id, function(result){
+            if(result. length > 0){
+                res.render('manager/clients/print-proposal', {
+                    allNotes: result,
+                    full_name: req.session.full_name
+                });
+            }
+            else{
+                res.redirect('/clients/profile/'+req.params.user_id+'/proposals')
+            }
+        });
     }
 });
 module.exports = router;

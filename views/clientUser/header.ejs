@@ -34,6 +34,7 @@
 
       <nav class="nav-menu d-none d-lg-block">
         <ul>
+          <% if(type!="") { %> <% if(type==="client") { %>
           <li class="active"><a href="/home">Dashboard</a></li>
           <!-- <li><a href="/clients">Clients</a></li>
           <li><a href="#services">Services</a></li>
@@ -41,12 +42,18 @@
           <li><a href="/client/chat">Chat</a></li>
           <li><a href="#pricing">Transactions</a></li> -->
           <li><a href="/client/profile">Profile</a></li>
-          <li><a href="#contact">Sign Out</a></li>
+          <li><a href="/logout">Sign Out</a></li>
+          <% } } else { %>
+          <li>
+            <a class="scrollTo" href="/login">Login</a>
+          </li>
+          <% } %>
         </ul>
       </nav>
       <!-- .nav-menu -->
 
-      <a href="#about" class="get-started-btn scrollto">Get Started</a>
+      <a href="/registration" class="get-started-btn scrollto">Get Started</a>
     </div>
   </header>
   <!-- End Header -->
+</body>

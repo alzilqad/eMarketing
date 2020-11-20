@@ -4,72 +4,164 @@
 
   <main id="main">
     <section id="client-profile-section">
-      <div class="row justify-content-center">
-        <div class="col col-xl-5 mt-3">
-          <div id="client-profile-box">
-            <div class="bg-primary text-light pt-3 pb-2 pl-2">
-              <div class="row justify-content-between">
-                <div class="col-4">
-                  <h5 class="text-left">Welcome, Client</h5>
-                </div>
-                <div class="col-4 text-right">
-                  <button class="btn btn-success mr-1">
-                    <a class="text-light" href="/client/profile"
-                      >Save Changes</a
+      <form method="post">
+        <div class="row justify-content-center">
+          <div class="col col-xl-5 mt-3">
+            <div id="client-profile-box">
+              <div class="bg-primary text-light pt-3 pb-2 pl-2">
+                <div class="row justify-content-between">
+                  <div class="col-4">
+                    <h5 class="text-left">Welcome, <%= user.full_name %></h5>
+                  </div>
+                  <div class="col-4 text-right">
+                    <a
+                      class="btn btn-warning mr-1 text-light"
+                      href="/client/profile"
+                      >Cancel</a
                     >
-                  </button>
-                  <button class="btn btn-warning mr-1">
-                    <a class="text-light" href="/client/profile">Cancel</a>
-                  </button>
+                  </div>
                 </div>
               </div>
+              <div class="text-center mt-3 mb-2">
+                <img
+                  src="/assets/img/team/team-2.jpg"
+                  alt="No Image.."
+                  id="manager-profile-pic"
+                />
+              </div>
+              <table
+                id="appointmentsTable"
+                class="table table-striped table-bordered"
+                style="width: 100%"
+              >
+                <tbody>
+                  <tr>
+                    <td>Name:</td>
+                    <td>
+                      <input
+                        class="form-control"
+                        type="text"
+                        name="full_name"
+                        value="<%=user.full_name%>"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Username:</td>
+                    <td>
+                      <input
+                        class="form-control"
+                        type="text"
+                        name="username"
+                        value="<%=user.username%>"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Email:</td>
+                    <td>
+                      <input
+                        class="form-control"
+                        type="text"
+                        name="email"
+                        value="<%=user.email%>"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Phone:</td>
+                    <td>
+                      <input
+                        class="form-control"
+                        type="text"
+                        name="contact_no"
+                        value="<%=user.contact_no%>"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Gender:</td>
+                    <td>
+                      <input
+                        class="form-control"
+                        type="text"
+                        name="gender"
+                        value="<%=user.gender%>"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Date of Birth:</td>
+                    <td>
+                      <input
+                        class="form-control"
+                        type="text"
+                        name="dob"
+                        value="<%=user.dob%>"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Address:</td>
+                    <td>
+                      <input
+                        class="form-control"
+                        type="text"
+                        name="address"
+                        value="<%=user.address%>"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Country:</td>
+                    <td>
+                      <input
+                        class="form-control"
+                        type="text"
+                        name="country"
+                        value="<%=user.country%>"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Status:</td>
+                    <td>
+                      <input
+                        class="form-control"
+                        type="text"
+                        name="status"
+                        value="<%=user.status%>"
+                        disabled
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><b>ENTER THE PASSWORD TO SAVE CHANGES</b></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>Password:</td>
+                    <td>
+                      <input
+                        class="form-control"
+                        type="text"
+                        name="password"
+                        value="********"
+                        required
+                      />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div align="right">
+                <button class="btn btn-success mr-1">
+                  <a class="text-light" href="/client/profile">Save Changes</a>
+                </button>
+              </div>
             </div>
-            <div class="text-center mt-3 mb-2">
-              <img
-                src="/assets/img/team/team-2.jpg"
-                alt="No Image.."
-                id="manager-profile-pic"
-              />
-            </div>
-            <table
-              id="appointmentsTable"
-              class="table table-striped table-bordered"
-              style="width: 100%"
-            >
-              <tbody>
-                <tr>
-                  <td>Name :</td>
-                  <td><input class="form-control" type="text" /></td>
-                </tr>
-                <tr>
-                  <td>Email :</td>
-                  <td><input class="form-control" type="text" /></td>
-                </tr>
-                <tr>
-                  <td>Phone :</td>
-                  <td><input class="form-control" type="text" /></td>
-                </tr>
-                <tr>
-                  <td>Date of Birth :</td>
-                  <td><input class="form-control" type="text" /></td>
-                </tr>
-                <tr>
-                  <td>Address :</td>
-                  <td><input class="form-control" type="text" /></td>
-                </tr>
-                <tr>
-                  <td>City :</td>
-                  <td><input class="form-control" type="text" /></td>
-                </tr>
-                <tr>
-                  <td>Joining Date :</td>
-                  <td><input class="form-control" type="text" /></td>
-                </tr>
-              </tbody>
-            </table>
           </div>
         </div>
-      </div>
+      </form>
     </section>
   </main>
 

@@ -3,7 +3,7 @@ const userModel = require.main.require("./models/clientUser/userModel");
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  res.render("clientUser/home/index", {
+  res.render("clientUser/dashboard/index", {
     name: req.cookies["uname"],
     type: req.cookies["type"],
   });
@@ -21,16 +21,17 @@ router.get("/profile", (req, res) => {
 
 router.get("/profile/edit/", (req, res) => {
   userModel.getByUsername(req.cookies["uname"], function (results) {
+    results[0].dob = new Date(results[0].dob).toISOString().slice(0,10);
     res.render("clientUser/profile/edit", {
       user: results[0],
       name: req.cookies["uname"],
       type: req.cookies["type"],
+      error_message: "",
     });
   });
 });
 
 router.post("/profile/edit/", (req, res) => {
-  
   var user = [
     req.body.password,
     req.body.full_name,
@@ -49,6 +50,9 @@ router.post("/profile/edit/", (req, res) => {
         if (result) {
           res.redirect("/client/profile/");
         } else {
+
+          results[0].dob = new Date(results[0].dob).toISOString().slice(0,10);
+
           res.render("clientUser/profile/edit", {
             user: results[0],
             name: req.cookies["uname"],
@@ -58,6 +62,9 @@ router.post("/profile/edit/", (req, res) => {
         }
       });
     } else {
+
+      results[0].dob = new Date(results[0].dob).toISOString().slice(0,10);
+
       res.render("clientUser/profile/edit", {
         user: results[0],
         name: req.cookies["uname"],

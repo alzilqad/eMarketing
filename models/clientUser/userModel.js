@@ -17,20 +17,6 @@ module.exports = {
     });
   },
 
-  // getAll: function (callback) {
-  //   var sql = "select * from user where user_type = 'user'";
-  //   db.getResults(sql, function (results) {
-  //     callback(results);
-  //   });
-  // },
-
-  // getById: function (id, callback) {
-  //   var sql = "select * from user where user_id='" + id + "'";
-  //   db.getResults(sql, function (results) {
-  //     callback(results);
-  //   });
-  // },
-
   getByUsername: function (username, callback) {
     var sql = "select * from client where username = '" + username + "'";
     db.getResults(sql, function (results) {
@@ -51,7 +37,7 @@ module.exports = {
       callback(results);
     });
   },
-
+  
   // delete: function (id, callback) {
   //   var sql = "DELETE from user where user_id='" + id + "'";
   //   db.getResults(sql, function (results) {
@@ -59,10 +45,4 @@ module.exports = {
   //   });
   // },
 
-  // getByName: function (name, callback) {
-  //   var sql = "select * from user where user_type = 'user' and full_name like '%" + name + "%'";
-  //   db.getResults(sql, function (results) {
-  //     callback(results);
-  //   });
-  // },
 };

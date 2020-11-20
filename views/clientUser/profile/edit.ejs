@@ -11,7 +11,7 @@
               <div class="bg-primary text-light pt-3 pb-2 pl-2">
                 <div class="row justify-content-between">
                   <div class="col-4">
-                    <h5 class="text-left">Welcome, <%= user.full_name %></h5>
+                    <h5 class="text-left">Welcome, <br/> <%= user.full_name %></h5>
                   </div>
                   <div class="col-4 text-right">
                     <a
@@ -98,7 +98,7 @@
                         class="form-control"
                         type="date"
                         name="dob"
-                        value="<%=user.dob.getFullYear()+"-"+(user.dob.getMonth()+1)+"-"+user.dob.getDate()%>"
+                        value="<%=user.dob%>"
                       />
                     </td>
                   </tr>
@@ -161,7 +161,9 @@
                   </tr>
                 </tbody>
               </table>
-
+              <% if(error_message!="") { %>
+              <a style="color: red"><%=error_message%></a>
+              <% } %>
               <div align="right">
                 <input
                     type="submit"

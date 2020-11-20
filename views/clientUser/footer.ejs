@@ -31,4 +31,21 @@
   <script src="/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
   <script src="/assets/vendor/aos/aos.js"></script>
   <script src="/assets/js/main.js"></script>
+
+  <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
+  <script src="/assets/js/clientProfile.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      $("#companyTable").DataTable();
+      $("#servicesTable").DataTable();
+      $("#appointmentsTable").DataTable();
+      $("#notesTable").DataTable();
+      $("#proposalsTable").DataTable();
+    });
+    $(function () {
+      $('[data-toggle="popover"]').popover();
+    });
+  </script>
 </body>

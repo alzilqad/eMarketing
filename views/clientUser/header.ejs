@@ -1,7 +1,7 @@
 <head>
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-  <title>Client Profile</title>
+  <title>CRM Spot</title>
   <meta content="" name="descriptison" />
   <meta content="" name="keywords" />
 
@@ -25,22 +25,38 @@
   />
   <link href="/assets/vendor/aos/aos.css" rel="stylesheet" />
   <link href="/assets/css/style.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
 </head>
 
-<body>
+<body onload="clientBodyLoader();">
   <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center">
       <h1 class="logo mr-auto"><a href="/home">CRM Spot</a></h1>
 
+      <!-- <form
+        method="post"
+        class="input-group mr-auto md-form form-sm form-1 pl-0"
+        style="width: 40%"
+      >
+        <input
+          class="form-control my-0 py-1"
+          name="searchInput"
+          type="text"
+          placeholder="...search company"
+          aria-label="Search"
+        />
+        <input
+          class="btn btn-primary"
+          type="submit"
+          name="search"
+          value="Search"
+        />
+      </form> -->
+
       <nav class="nav-menu d-none d-lg-block">
         <ul>
           <% if(type!="") { %> <% if(type==="client") { %>
-          <li class="active"><a href="/home">Dashboard</a></li>
-          <!-- <li><a href="/clients">Clients</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#portfolio">Appoitments</a></li>
-          <li><a href="/client/chat">Chat</a></li>
-          <li><a href="#pricing">Transactions</a></li> -->
+          <li class="active"><a href="/client">Dashboard</a></li>
           <li><a href="/client/profile">Profile</a></li>
           <li><a href="/logout">Sign Out</a></li>
           <% } } else { %>

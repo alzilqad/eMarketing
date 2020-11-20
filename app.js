@@ -11,6 +11,7 @@ const login				= require('./controllers/clientUser/login');
 const logout			= require('./controllers/clientUser/logout');
 const registration		= require('./controllers/clientUser/registration');
 const client			= require('./controllers/clientUser/client');
+const company			= require('./controllers/clientUser/company');
 
 //configuration
 app.set('view engine', 'ejs');
@@ -26,6 +27,7 @@ app.use('/login', login);
 app.use('/logout', logout);
 app.use('/registration', registration);
 app.use('/client', client);
+app.use('/client/company', company);
 
 //router
 app.get('/', (req, res)=>{

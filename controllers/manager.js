@@ -258,6 +258,7 @@ router.post('/reset-password', function(req, res){
             var sql = "UPDATE manager SET password='"+req.body.password+"' WHERE id='" + req.session.user_id + "'";
             managerModel.update(sql, function (callback){
                 if(callback == true){
+                    req.session.destroy();
                     res.redirect('/manager/login');
                 }
                 else{

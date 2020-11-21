@@ -4,6 +4,7 @@ const clientModel = require.main.require('./models/clientModel');
 const noteModel = require.main.require('./models/noteModel');
 const appointmentModel = require.main.require('./models/appointmentModel');
 const proposalModel = require.main.require('./models/proposalModel');
+const callsModel = require.main.require('./models/callsModel');
 const router = express.Router();
 router.get('/', (req, res) => {
     if (req.session.email == null || req.session.email.length < 2) {
@@ -113,7 +114,81 @@ router.post('/profile/delete/:id', function (req, res) {
     }
 })
 router.get('/profile/:id/calls', (req, res) => {
-    res.render('manager/clients/calls');
+    if(req.session.email == null || req.session.email.length < 2){
+        res.redirect('/manager/login');
+    }   
+    else{
+        clientModel.getById(req.params.id, function (result) {
+            if (result.length > 0) {
+                callsModel.getById(req.params.id, function (value) { 
+                    res.render('manager/clients/calls', {
+                        calls: value,
+                        user: result,
+                        full_name: req.session.full_name
+                    });
+                });
+            } else {
+                res.redirect('/clients');
+            }
+        });
+    }
+});
+router.post('/profile/:id/calls', (req, res) => {
+    if (req.session.email == null || req.session.email.length < 2) {
+        res.redirect('/manager/login');
+    }else{
+        if(req.session.user_id==null){
+            res.redirect('/manager/login');
+        }
+        else{
+            var calls = {};
+            calls.title = req.body.title;
+            calls.description = req.body.description;
+            calls.date = req.body.date;
+            calls.client_id = req.params.id;
+            calls.manager_id = req.session.user_id;
+            console.log(calls);
+            callsModel.insert(calls,function(status){
+                if(status == true){
+                    res.redirect('/clients/profile/'+req.params.id+'/calls');
+                }
+                else{
+                    res.redirect('/clients/profile/'+req.params.id+'/calls');
+                }
+            });
+        }
+    }
+});
+router.get('/profile/:user_id/calls/delete/:id', function(req, res){
+    callsModel.delete(req.params.id, function(status){
+        if(status==true){
+            res.redirect('/clients/profile/'+req.params.user_id+'/calls');
+        }else{
+            res.send('Could not delete the call');
+        }
+    })
+});
+router.post('/profile/:user_id/calls/edit/:id', function(req, res){
+    if(req.session.email==null){
+        res.redirect('/manager/login');
+    }
+    else{
+        calls = {};
+        calls.id = req.params.id;
+        calls.title =  req.body.title;
+        calls.description = req.body.description;
+        calls.date = req.body.date;
+        calls.client_id = req.params.user_id;
+        calls.manager_id = req.session.user_id;
+        callsModel.update(calls, function(status){
+            if(status==true){
+                res.redirect('/clients/profile/'+req.params.user_id+'/calls');
+            }
+            else{
+                res.redirect('/clients/profile/'+req.params.user_id+'/calls');
+            }
+        });
+    }
 });
 router.get('/profile/:id/appointments', (req, res) => {
     if(req.session.email==null){

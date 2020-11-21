@@ -74,6 +74,24 @@ router.get("/:id/notes", (req, res) => {
   );
 });
 
+// router.post("/:id/notes", (req, res) => {
+//   noteModel.getAll(
+//     req.cookies["client_id"],
+//     req.cookies["manager_id"],
+//     function (results) {
+//       console.log(results);
+//       res.render("clientUser/company/notes", {
+//         note: results,
+//         name: req.cookies["uname"],
+//         type: req.cookies["type"],
+//         id: req.cookies["id"],
+//         company_name: req.cookies["company_name"],
+//         company_contact: req.cookies["company_contact"],
+//       });
+//     }
+//   );
+// });
+
 router.get("/:id/appointments", (req, res) => {
   appointmentModel.getAll(
     req.cookies["client_id"],

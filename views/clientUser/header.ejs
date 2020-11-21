@@ -25,7 +25,10 @@
   />
   <link href="/assets/vendor/aos/aos.css" rel="stylesheet" />
   <link href="/assets/css/style.css" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
+  <link
+    rel="stylesheet"
+    href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css"
+  />
 </head>
 
 <body onload="clientBodyLoader();">
@@ -55,16 +58,17 @@
 
       <nav class="nav-menu d-none d-lg-block">
         <ul>
-          <% if(type!="") { %> <% if(type==="client") { %>
-          <li class="active"><a href="/client">Dashboard</a></li>
-          <li><a href="/companylist">Company</a></li>
-          <li><a href="/client/profile">Profile</a></li>
-          <li><a href="/logout">Sign Out</a></li>
-          <% } } else { %>
+          <% if(type=="") { %>
           <li>
             <a class="scrollTo" href="/login">Login</a>
           </li>
-          <% } %>
+          <% } else { %> <% if(type==="client") { %>
+          <li class="active"><a href="/client">Dashboard</a></li>
+          <li><a href="/companylist">Company</a></li>
+          <li><a href="/proposal">Proposal</a></li>
+          <li><a href="/client/profile">Profile</a></li>
+          <li><a href="/logout">Sign Out</a></li>
+          <% } } %>
         </ul>
       </nav>
       <!-- .nav-menu -->

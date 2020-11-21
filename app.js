@@ -12,7 +12,7 @@ const logout			= require('./controllers/clientUser/logout');
 const registration		= require('./controllers/clientUser/registration');
 const client			= require('./controllers/clientUser/client');
 const company			= require('./controllers/clientUser/company');
-const companylist			= require('./controllers/clientUser/companylist');
+const companylist		= require('./controllers/clientUser/companylist');
 
 //configuration
 app.set('view engine', 'ejs');

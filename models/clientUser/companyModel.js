@@ -5,19 +5,7 @@ module.exports = {
     var sql =
       "select * from affiliated_companies ac, company c, manager m where ac.client_username = '" +
       username +
-      "' and ac.company_name = c.company_name and c.manager_id = m.id";
-    db.getResults(sql, function (results) {
-      callback(results);
-    });
-  },
-
-  getByName: function (username, name, callback) {
-    var sql =
-      "select * from affiliated_companies ac, company c, manager m where ac.client_username = '" +
-      username +
-      "' and ac.company_name = c.company_name and c.manager_id = m.id and c.company_name like '%" +
-      name +
-      "%'";
+      "' and ac.company_id = c.id and c.manager_id = m.id";
     db.getResults(sql, function (results) {
       callback(results);
     });
@@ -25,11 +13,11 @@ module.exports = {
 
   getById: function (username, id, callback) {
     var sql =
-      "select * from affiliated_companies ac, company c, manager m where ac.client_username = '" +
+      "select ac.*, m.*, c.*, client.client_id, client.username from affiliated_companies ac, company c, manager m, client where ac.client_username = '" +
       username +
-      "' and ac.id = '" +
+      "' and ac.affiliated_company_id = '" +
       id +
-      "' and ac.company_name = c.company_name and c.manager_id = m.id";
+      "' and ac.company_id = c.id and c.manager_id = m.id and ac.client_username=client.username";
     db.getResults(sql, function (results) {
       callback(results);
     });

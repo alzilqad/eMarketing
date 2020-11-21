@@ -29,7 +29,7 @@
             <tbody>
               <% companies.forEach( function(std){ %>
                 <tr>
-                  <td><a href="/client/company/<%=std.affiliated_company_id%>"><%= std.company_name %></a></td>
+                  <td><a href="/companylist/<%=std.id%>"><%= std.company_name %></a></td>
                   <td><%= std.company_address %></td>
                   <td><%= std.contact_number %></td>
                   <td><%= std.type %></td>

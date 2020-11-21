@@ -3,6 +3,7 @@ const managerModel = require.main.require('./models/managerModel');
 const companyModel = require.main.require('./models/companyModel');
 const clientModel = require.main.require('./models/clientModel');
 const servicesModel = require.main.require('./models/servicesModel');
+const nodemailer 			= require('nodemailer');
 const router = express.Router();
 router.get('/', (req, res) => {
     if (req.session.email != null) {
@@ -76,7 +77,9 @@ router.get('/chat', (req, res) => {
     if (req.session.email == null || req.session.email.length < 2) {
         res.redirect('/manager/login');
     } else {
-        res.render('manager/chat/index');
+        res.render('manager/chat/index',{
+            full_name: req.session.full_name
+        });
     }
 });
 router.get('/profile', (req, res) => {
@@ -149,7 +152,7 @@ router.post('/login', (req, res) => {
                 
             });
         } else {
-            res.redirect('/login');
+            res.redirect('/manager/login');
         }
     });
 });
@@ -205,7 +208,9 @@ router.post('/forgot-password', (req, res) => {
             req.session.user_id = result[0].id;
             req.session.user_name = result[0].full_name;
             req.session.password = result[0].password;
-            res.redirect('/manager/verify-code');
+            req.session.user_mail = result[0].email;
+            res.redirect('/manager/send-mail');
+            //res.redirect('/manager/verify-code');
         }
         else{
             res.redirect('/manager/forgot-password');
@@ -213,7 +218,7 @@ router.post('/forgot-password', (req, res) => {
     });
 });
 router.get('/verify-code', (req, res) => {
-    if(req.session.user_name==null){
+    if(req.session.verification_code==null || req.session.user_mail==null){
         res.redirect('/manager/forgot-password');
     }
     else{
@@ -223,8 +228,47 @@ router.get('/verify-code', (req, res) => {
         });
     }
 });
+router.post('/verify-code', function(req, res){
+    if(req.session.verification_code== null || req.session.user_mail== null){
+        res.redirect('/manager/forgot-password');
+    }
+    else{
+        if(req.session.verification_code==req.body.verification_code){
+            res.redirect('/manager/reset-password');
+        }
+        else{
+            req.send('Invalid Verification Code!');
+        }
+    }
+});
 router.get('/reset-password', (req, res) => {
-    res.render('manager/home/reset-password');
+    if(req.session.user_mail==null || req.session.verification_code==null){
+        res.redirect('/manager/forgot-password');
+    }
+    else{
+        res.render('manager/home/reset-password');
+    }
+});
+router.post('/reset-password', function(req, res){
+    if(req.session.user_mail==null || req.session.verification_code==null){
+        res.redirect('/manager/forgot-password');
+    }
+    else{
+        if(req.body.password==req.body.confirm_password){
+            var sql = "UPDATE manager SET password='"+req.body.password+"' WHERE id='" + req.session.user_id + "'";
+            managerModel.update(sql, function (callback){
+                if(callback == true){
+                    res.redirect('/manager/login');
+                }
+                else{
+                    res.send('Could not reset password!');
+                }
+            });
+        }
+        else{
+            res.send('Invalid Password!');
+        }
+    }
 });
 router.get('/signout', (req, res) => {
     req.session.destroy();
@@ -298,5 +342,32 @@ router.post('/company/services/edit/:id', (req, res)=>{
             }
         });
     }
+});
+router.get('/send-mail', function (req, res){
+    var transporter = nodemailer.createTransport({ 
+        service: 'gmail',
+        auth: {
+            user:'shohag.cse45@gmail.com',
+            pass: 'cinecarnival'
+        }
+    });
+    
+    var verification_code = Math.floor(Math.random() * (9999 - 1000)) + 1000;
+    req.session.verification_code = verification_code;
+    var mailOptions = {
+        from: 'shohag.cse45@gmail.com',
+        to: req.session.user_mail,
+        subject: 'Password Reset',
+        text: 'To reset your password please enter the following code in the field: '+verification_code
+    };
+    
+    transporter.sendMail(mailOptions, function(err,info){
+        if(err){
+            //console.log(err);
+        }else{
+            //console.log('Mail has been sent!'+ info.response);
+        }
+    });
+    res.redirect('/manager/verify-code');
 });
 module.exports = router;

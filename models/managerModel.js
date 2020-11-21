@@ -42,6 +42,7 @@ module.exports= {
 		});
 	},
 	update:function(sql, callback){
+		console.log(sql);
 		db.execute(sql, function(status){
 			callback(status);
 		});

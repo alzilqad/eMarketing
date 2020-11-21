@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../header') %>
+
+  <main id="main">
+    <section>
+      <div class="row justify-content-center mt-3">
+        <div class="col col-xl-8">
+          <div class="row justify-content-around">
+            <div class="col-4 manager-dashboard-boxes text-center pt-5">
+              <h6 class="mb-5">Affiliated Companies</h6>
+              <button class="btn btn-link border-light mb-1">
+                <a
+                  class="text-center text-light text-decoration-none"
+                  href="/client/company"
+                  >Manage Companies</a
+                >
+              </button>
+            </div>
+            <div
+              class="col-4 manager-dashboard-boxes text-center pt-5"
+              style="background: #5f9f9f"
+            >
+              <h6 class="mb-5">Proposal List</h6>
+              <button class="btn btn-link border-light mb-1">
+                <a
+                  class="text-center text-light text-decoration-none"
+                  href="/client/proposal"
+                  >Manage Proposals</a
+                >
+              </button>
+            </div>
+            <div
+              class="col-4 manager-dashboard-boxes text-center pt-5"
+              style="background: #7a67ee"
+            >
+              <h6 class="mb-5">Preferences</h6>
+              <button class="btn btn-link border-light mb-1">
+                <a
+                  class="text-center text-light text-decoration-none"
+                  href="/client/preference"
+                  >Manage Preferences</a
+                >
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <%- include('../footer') %>
+</html>

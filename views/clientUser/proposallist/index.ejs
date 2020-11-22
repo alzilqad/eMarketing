@@ -218,7 +218,7 @@
                         <%if(std.posted_by==std.username ||
                         std.posted_by==std.full_name) {
                         if(std.status.toLowerCase()=="active") {%>
-                        <button class="btn btn-danger">Opt Up</button>
+                        <button class="btn btn-danger" onclick="optUp(std.id)">Opt Up</button>
                         <%}} else {%>
                         <button class="btn btn-danger">Approve</button>
                         <%}%>

@@ -38,12 +38,14 @@ router.get("/:id", (req, res) => {
   });
 });
 
+// proposals
+
 router.get("/:id/proposals", (req, res) => {
   proposalModel.getAll(
     req.cookies["client_id"],
     req.cookies["company_id"],
     function (results) {
-    //   console.log(results);
+        console.log(results);
       res.render("clientUser/company/proposals", {
         proposal: results,
         name: req.cookies["uname"],
@@ -55,6 +57,8 @@ router.get("/:id/proposals", (req, res) => {
     }
   );
 });
+
+// notes
 
 router.get("/:id/notes", (req, res) => {
   noteModel.getAll(
@@ -74,30 +78,40 @@ router.get("/:id/notes", (req, res) => {
   );
 });
 
-// router.post("/:id/notes", (req, res) => {
-//   noteModel.getAll(
-//     req.cookies["client_id"],
-//     req.cookies["manager_id"],
-//     function (results) {
-//       console.log(results);
-//       res.render("clientUser/company/notes", {
-//         note: results,
-//         name: req.cookies["uname"],
-//         type: req.cookies["type"],
-//         id: req.cookies["id"],
-//         company_name: req.cookies["company_name"],
-//         company_contact: req.cookies["company_contact"],
-//       });
-//     }
-//   );
-// });
+router.post("/:id/notes", (req, res) => {
+  var currentdate = new Date();
+  var note = [
+    req.body.title,
+    req.body.body,
+    req.cookies["manager_id"],
+    req.cookies["client_id"],
+    currentdate.getFullYear() +
+      "-" +
+      (currentdate.getMonth() + 1) +
+      "-" +
+      currentdate.getDate(),
+    req.cookies["uname"],
+  ];
+
+  noteModel.insert(note, function () {
+    res.redirect("/client/company/" + req.params.id + "/notes");
+  });
+});
+
+router.get("/:id/notes/delete/:id2", (req, res) => {
+  noteModel.delete(req.params.id2, function () {
+    res.redirect("/client/company/" + req.params.id + "/notes");
+  });
+});
+
+// appointments
 
 router.get("/:id/appointments", (req, res) => {
   appointmentModel.getAll(
     req.cookies["client_id"],
     req.cookies["manager_id"],
     function (results) {
-    //   console.log(results);
+      // console.log(results);
       res.render("clientUser/company/appointments", {
         appointment: results,
         name: req.cookies["uname"],
@@ -110,20 +124,65 @@ router.get("/:id/appointments", (req, res) => {
   );
 });
 
+router.post("/:id/appointments", (req, res) => {
+  var currentdate = new Date();
+  var appointment = [
+    req.body.title,
+    req.body.body,
+    req.body.date,
+    currentdate.getFullYear() +
+      "-" +
+      (currentdate.getMonth() + 1) +
+      "-" +
+      currentdate.getDate(),
+    req.cookies["manager_id"],
+    req.cookies["client_id"],
+    req.cookies["uname"],
+  ];
+
+  appointmentModel.insert(appointment, function () {
+    res.redirect("/client/company/" + req.params.id + "/appointments");
+  });
+});
+
+router.get("/:id/appointments/edit/:id2", (req, res) => {
+  var currentdate = new Date();
+  var appointment = [
+    req.body.title,
+    req.body.body,
+    req.body.date,
+    currentdate.getFullYear() +
+      "-" +
+      (currentdate.getMonth() + 1) +
+      "-" +
+      currentdate.getDate(),
+  ];
+
+  appointmentModel.update(appointment, req.params.id2, function () {
+    res.redirect("/client/company/" + req.params.id + "/appointments");
+  });
+});
+
+router.get("/:id/appointments/delete/:id2", (req, res) => {
+  appointmentModel.delete(req.params.id2, function () {
+    res.redirect("/client/company/" + req.params.id + "/appointments");
+  });
+});
+
+// services
+
 router.get("/:id/services", (req, res) => {
-  serviceModel.getAll(req.cookies["company_id"], function (
-      results
-    ) {
-      console.log(results);
-      res.render("clientUser/company/services", {
-        service: results,
-        name: req.cookies["uname"],
-        type: req.cookies["type"],
-        id: req.cookies["id"],
-        company_name: req.cookies["company_name"],
-        company_contact: req.cookies["company_contact"],
-      });
+  serviceModel.getAll(req.cookies["company_id"], function (results) {
+    console.log(results);
+    res.render("clientUser/company/services", {
+      service: results,
+      name: req.cookies["uname"],
+      type: req.cookies["type"],
+      id: req.cookies["id"],
+      company_name: req.cookies["company_name"],
+      company_contact: req.cookies["company_contact"],
     });
+  });
 });
 
 module.exports = router;

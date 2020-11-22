@@ -3,7 +3,7 @@ const db = require("./db");
 module.exports = {
   getAll: function (client_id, company_id, callback) {
     var sql =
-      "select * from proposal p, client c, manager m where p.client_id = '" +
+      "select p.*,c.full_name,c.username from proposal p, client c, manager m where p.client_id = '" +
       client_id +
       "' and p.company_id = '" +
       company_id +

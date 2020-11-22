@@ -13,6 +13,7 @@ const registration		= require('./controllers/clientUser/registration');
 const client			= require('./controllers/clientUser/client');
 const company			= require('./controllers/clientUser/company');
 const companylist		= require('./controllers/clientUser/companylist');
+const proposallist		= require('./controllers/clientUser/proposallist');
 
 //configuration
 app.set('view engine', 'ejs');
@@ -30,6 +31,7 @@ app.use('/registration', registration);
 app.use('/client', client);
 app.use('/client/company', company);
 app.use('/companylist', companylist);
+app.use('/proposallist', proposallist);
 
 //router
 app.get('/', (req, res)=>{

@@ -3,6 +3,7 @@ const companylistModel = require.main.require(
   "./models/clientUser/companylistModel"
 );
 const serviceModel = require.main.require("./models/clientUser/serviceModel");
+const proposalModel = require.main.require("./models/clientUser/proposalModel");
 
 const router = express.Router();
 
@@ -48,6 +49,24 @@ router.get("/:id/services", (req, res) => {
       company_contact: req.cookies["company_contact"],
     });
   });
+});
+
+router.get("/:id/proposals", (req, res) => {
+  proposalModel.getAll(
+    req.cookies["client_id"],
+    req.cookies["company_id"],
+    function (results) {
+      console.log(results);
+      res.render("clientUser/companylist/proposals", {
+        proposal: results,
+        name: req.cookies["uname"],
+        type: req.cookies["type"],
+        id: req.cookies["id"],
+        company_name: req.cookies["company_name"],
+        company_contact: req.cookies["company_contact"],
+      });
+    }
+  );
 });
 
 module.exports = router;

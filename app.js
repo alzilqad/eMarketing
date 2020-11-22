@@ -14,6 +14,7 @@ const client			= require('./controllers/clientUser/client');
 const company			= require('./controllers/clientUser/company');
 const companylist		= require('./controllers/clientUser/companylist');
 const proposallist		= require('./controllers/clientUser/proposallist');
+const servicelist		= require('./controllers/clientUser/servicelist');
 
 //configuration
 app.set('view engine', 'ejs');
@@ -32,6 +33,7 @@ app.use('/client', client);
 app.use('/client/company', company);
 app.use('/companylist', companylist);
 app.use('/proposallist', proposallist);
+app.use('/servicelist', servicelist);
 
 //router
 app.get('/', (req, res)=>{

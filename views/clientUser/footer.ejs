@@ -35,6 +35,17 @@
   <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
   <script src="/assets/js/clientProfile.js"></script>
+  
+  <script>
+    function printMe(a,e){
+      var restorePage = document.body.innerHTML;
+      document.getElementById(a).style.display='none';
+      var printContent = document.getElementById(e);
+      window.print();
+      document.getElementById(a).style.display='block';
+      document.body.innerHTML = restorePage;
+    } 
+  </script>
 
   <script>
     $(document).ready(function () {

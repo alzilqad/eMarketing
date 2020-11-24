@@ -3,10 +3,15 @@ const userModel = require.main.require("./models/clientUser/userModel");
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  res.render("clientUser/dashboard/index", {
-    name: req.cookies["uname"],
-    type: req.cookies["type"],
-  });
+  res.cookie("error","");
+  if (req.cookies["uname"] == null) {
+    res.redirect("/login");
+  } else {
+    res.render("clientUser/dashboard/index", {
+      name: req.cookies["uname"],
+      type: req.cookies["type"],
+    });
+  }
 });
 
 router.get("/profile", (req, res) => {
@@ -20,18 +25,18 @@ router.get("/profile", (req, res) => {
 });
 
 router.post("/profile", (req, res) => {
-  if(req.files){
+  if (req.files) {
     // console.log(req.files);
     var file = req.files.file;
     var filename = file.name;
     // console.log(filename);
-    file.mv('../.././assets/img/team/'+filename, function(err){
-      if(err){
+    file.mv("../.././assets/img/team/" + filename, function (err) {
+      if (err) {
         res.send(err);
-      }else{
-        res.redirect('/client/profile');
+      } else {
+        res.redirect("/client/profile");
       }
-    })
+    });
   }
 });
 
@@ -106,7 +111,7 @@ router.post("/profile/edit/", (req, res) => {
               user: results[0],
               name: req.cookies["uname"],
               type: req.cookies["type"],
-              error: [{msg: "The information is failed to updated"}],
+              error: [{ msg: "The information is failed to updated" }],
             });
           }
         });
@@ -117,7 +122,7 @@ router.post("/profile/edit/", (req, res) => {
           user: results[0],
           name: req.cookies["uname"],
           type: req.cookies["type"],
-          error: [{msg: "Incorrect Password"}],
+          error: [{ msg: "Incorrect Password" }],
         });
       }
     });

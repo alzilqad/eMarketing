@@ -3,12 +3,14 @@ const userModel = require.main.require("./models/clientUser/userModel");
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  if(req.cookies['uname']!=""){
+  if (req.cookies["uname"] != null) {
     res.redirect("/client");
-  } else{
+  }
+  else{
     res.cookie("error","");
     res.render("clientUser/login/index", {name: req.cookies['uname'], type: req.cookies['type'], error: req.cookies['error']});
   }
+    
 });
 
 router.post("/", (req, res) => {
@@ -31,7 +33,7 @@ router.post("/", (req, res) => {
       res.cookie("type", "client");
       res.clearCookie("error");
       // res.cookie("type", type);
-        res.redirect("/client");
+      res.redirect("/client");
       } else {
         res.render("clientUser/login/index", {name: req.cookies['uname'], type: req.cookies['type'], error: [{msg: "Invalid Username or Password"}]});
       }

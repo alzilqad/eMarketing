@@ -9,6 +9,11 @@
           <fieldset>
             <legend><h2>REGISTRATION</h2></legend>
             <table>
+              <% if(error!="") {%>
+              <tr>
+                <a style="color: red"><%=error[0].msg%></a>
+              </tr>
+              <% } %>
               <tr>
                 <td>Username:</td>
                 <td>
@@ -71,7 +76,12 @@
               <tr>
                 <td></td>
                 <td>
-                  <input class="btn btn-primary" type="submit" name="submit" value="Submit" />
+                  <input
+                    class="btn btn-primary"
+                    type="submit"
+                    name="submit"
+                    value="Submit"
+                  />
                   <a class="btn btn-primary" href="/login">Login</a>
                 </td>
               </tr>

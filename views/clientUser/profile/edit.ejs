@@ -24,7 +24,7 @@
               </div>
               <div class="text-center mt-3 mb-2">
                 <img
-                  src="/assets/img/team/team-2.jpg"
+                  src="/assets/img/team/team-3.jpg"
                   alt="No Image.."
                   id="manager-profile-pic"
                 />
@@ -161,8 +161,8 @@
                   </tr>
                 </tbody>
               </table>
-              <% if(error_message!="") { %>
-              <a style="color: red"><%=error_message%></a>
+              <% if(error!="") { %>
+              <a style="color: red"><%=error[0].msg%></a>
               <% } %>
               <div align="right">
                 <input

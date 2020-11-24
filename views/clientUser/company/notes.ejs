@@ -152,6 +152,11 @@
                   class="table table-striped table-bordered"
                   style="width: 100%"
                 >
+                <% if(error!="" && error!=null) {%>
+
+                  <a style="color: red"><%=error[0].msg%></a>
+
+                <% } %>
                   <thead>
                     <tr>
                       <th>Title</th>
@@ -218,7 +223,7 @@
                      </form>
 
                      <%if(std.posted_by==std.username || std.posted_by==std.full_name) {%>
-                      <form action="/client/company/<%=id%>/notes/delete/<%=std.id%>" method="get">
+                      <form action="/client/company/<%=id%>/notes/delete/<%=std.id%>" method="post">
                         <button class="btn btn-danger text-light">Delete</button>
                       </form>  
                       <% } %>      

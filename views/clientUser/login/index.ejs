@@ -9,6 +9,11 @@
           <fieldset>
             <legend><h2>LOGIN</h2></legend>
             <table>
+              <% if(error!="" && error!=null) {%>
+              <tr>
+                <a style="color: red"><%=error[0].msg%></a>
+              </tr>
+              <% } %>
               <tr>
                 <td>Username</td>
                 <td>

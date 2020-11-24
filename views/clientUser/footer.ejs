@@ -6,7 +6,7 @@
           &copy; Copyright <strong><span>CRM Spot</span></strong>. All Rights Reserved
         </div>
         <div class="credits">
-          Designed by <a href="#">APWT G7</a>
+          Designed by <a href="#" >APWT G7</a>
         </div>
       </div>
       <div class="social-links text-center text-md-right pt-3 pt-md-0">
@@ -60,17 +60,33 @@
     });
   </script>
 
+<!-- <script>
+  $(document).ready(function(){
+  setInterval(function(){
+  $("#messaging").load('messaging')
+  }, 2000);
+  });
+</script> -->
+
 <script>
-  function optUp(id) {
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        document.getElementById("demo").innerHTML = this.responseText;
+
+const goBtn = document.getElementById("btn1");
+  goBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    let text1 = document.getElementById("text1").value;
+
+    $.ajax({
+      type: "POST",
+      url: window.location.pathname,
+      contentType: "application/json",
+      data: JSON.stringify({ text: text1 }),
+      success: (data) => {
+        document.getElementById("loaddiv").innerHTML = data;
       }
-    };
-    xhttp.open("POST", "clientUser/proposallist/<id>", true);
-    xhttp.send();
-  }
+    });
+  });
+
 </script>
 
 </body>

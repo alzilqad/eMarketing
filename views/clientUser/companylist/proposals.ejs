@@ -410,14 +410,15 @@
                         </div>
                       </div>
                       <td class="text-center">
-                        <% if(std.status.toLowerCase()=="active") {%>
+                        <% if(std.posted_by==std.username) {%>
+                          <% if(std.status.toLowerCase()=="active") {%>
                         <form
                           action="/companylist/<%=std.company_id%>/proposals/optup/<%=std.id%>"
                           method="post"
                         >
                           <button class="btn btn-danger">Opt Up</button>
                         </form>
-                        <%} else {%>
+                        <%}} else if(std.status.toLowerCase()=="inactive") {%>
                         <form
                           action="/companylist/<%=std.company_id%>/proposals/approve/<%=std.id%>"
                           method="post"

@@ -96,7 +96,7 @@ router.post("/:id/proposals", (req, res) => {
     .isLength({ min: 5 })
     .withMessage("Country must contain minimum 5 characters");
   req
-    .check("zipcode", "Invalid Zipcode")
+    .check("zip_code", "Invalid Zipcode")
     .isInt()
     .withMessage("Zipcode Number must be only numeric")
     .isLength({ min: 4 })

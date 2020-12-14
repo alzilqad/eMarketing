@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../header') %>
+
+  <main id="main">
+    <section id="login-box">
+      <div align="center">
+        <form method="post">
+          <fieldset>
+            <legend><h2>LOGIN</h2></legend>
+            <table>
+              <% if(error!="" && error!=null) {%>
+              <tr>
+                <a style="color: red"><%=error[0].msg%></a>
+              </tr>
+              <% } %>
+              <tr>
+                <td>Username</td>
+                <td>
+                  <input class="form-control" type="text" name="username" />
+                </td>
+              </tr>
+              <tr>
+                <td>Password</td>
+                <td>
+                  <input class="form-control" type="password" name="password" />
+                </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>
+                  <input
+                    type="submit"
+                    class="btn btn-primary"
+                    name="submit"
+                    value="Login"
+                  />
+                </td>
+              </tr>
+            </table>
+          </fieldset>
+        </form>
+      </div>
+      >
+    </section>
+  </main>
+
+  <%- include('../footer') %>
+</html>

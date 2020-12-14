@@ -1,0 +1,47 @@
+<html lang="en">
+  <%- include('../header') %>
+
+  <main id="main">
+    <section>
+        <form method="post">
+      <div class="row justify-content-center">
+        <div class="col col-lg-8 mt-4">
+          <h4>Companies:</h4>
+        </div>
+      </div>
+
+      <div class="row justify-content-center">
+        <div class="col col-xl-8 mt-4">
+          <table
+            id="proposalsTable"
+            class="table table-striped table-bordered"
+            style="width: 100%"
+          >
+            <thead>
+              <tr>
+                <th>Company Name</th>
+                <th>Office</th>
+                <th>Contact Number</th>
+                <th>Company Type</th>
+                <th>Manager</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% companies.forEach( function(std){ %>
+                <tr>
+                  <td><a href="/companylist/<%=std.id%>"><%= std.company_name %></a></td>
+                  <td><%= std.company_address %></td>
+                  <td><%= std.contact_number %></td>
+                  <td><%= std.type %></td>
+                  <td><%= std.full_name %></td>
+                </tr>
+                <% }); %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <%- include('../footer') %>
+</html>

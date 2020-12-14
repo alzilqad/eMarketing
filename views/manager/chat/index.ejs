@@ -25,38 +25,22 @@
     <div class="container d-flex align-items-center">
 
       <h1 class="logo mr-auto"><a href="/manager">CRM Spot</a></h1>
-    
       <nav class="nav-menu d-none d-lg-block">
         <ul>
-          <li><a href="/manager">Dashboard</a></li>
-          <li><a href="/clients">Clients</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#portfolio">Appoitments</a></li>
-          <li class="active"><a href="/manager/chat">Chat</a></li>
-          <li><a href="#pricing">Transactions</a></li>
-          <li class="drop-down"><a href="">Drop Down</a>
-            <ul>
-              <li><a href="#">Drop Down 1</a></li>
-              <li class="drop-down"><a href="#">Deep Drop Down</a>
-                <ul>
-                  <li><a href="#">Deep Drop Down 1</a></li>
-                  <li><a href="#">Deep Drop Down 2</a></li>
-                  <li><a href="#">Deep Drop Down 3</a></li>
-                  <li><a href="#">Deep Drop Down 4</a></li>
-                  <li><a href="#">Deep Drop Down 5</a></li>
-                </ul>
-              </li>
-              <li><a href="#">Drop Down 2</a></li>
-              <li><a href="#">Drop Down 3</a></li>
-              <li><a href="#">Drop Down 4</a></li>
-            </ul>
-          </li>
-          <li><a href="#contact">Contact</a></li>
+          <% if(full_name!=null) { %>
+            <li class="active"><a href="/manager">Dashboard</a></li>
+            <li><a href="/clients">Clients</a></li>
+            <li><a href="/manager/company">Company</a></li>
+            <li><a href="/manager/company/services">Services</a></li>
+            <li><a href="/manager/chat">Chat</a></li>
+            <li><a href="/manager/profile">Profile</a></li>
+            <li><a href="/manager/signout">Sign Out</a></li>
+          <% } else { %>
+            <li><a href="/manager/login">Sign In</a></li>
+          <% } %>
 
         </ul>
       </nav><!-- .nav-menu -->
-
-      <a href="#about" class="get-started-btn scrollto">Get Started</a>
 
     </div>
   </header><!-- End Header -->
@@ -69,19 +53,31 @@
         <div class="row justify-content-center mt-3">
             <div class="col col-xl-8">
               <div class="row justify-content-around">
-                <div class="col-3 manager-dashboard-boxes text-center pt-5">
-                  <h6 class="mb-5">Total Clients: 0</h6>
-                  <h6 class="mb-5">Active Clients: 0</h6>
-                  <button class="btn btn-link border-light mb-1"><a class="text-center text-light  text-decoration-none" href="/clients">Manage Clients</a></button>
+                <div class="col-12 col-xl-10 text-center">
+                  <h2><b><i><u>Chat</u></i></b></h2>
                 </div>
-                <div class="col-4 manager-dashboard-boxes text-center pt-5" style="background: #5F9F9F;">
-                  <h6 class="mb-5">Total Services: 0</h6>
-                  <h6 class="mb-5">Active Services: 0</h6>
-                  <button class="btn btn-link border-light mb-1"><a class="text-center text-light  text-decoration-none" href="/clients">Manage Services</a></button>
+                <div class="col-12 col-xl-3 bg-success text-white"><br>
+                  <input class="form-control" id="searchBox" name="searchtext" placeholder="Search Clients to Chat" type="text">
+                  <ul id="myTable" class="text-light">
+                    <li></li>
+                  </ul>
                 </div>
-                <div class="col-4 manager-dashboard-boxes text-center pt-5" style="background: #7A67EE;">
-                  <h6 class="mb-5">Total Transactions: 0</h6>
-                  <button class="btn btn-link border-light mt-5"><a class="text-center text-light  text-decoration-none" href="/clients">Manage Transactions</a></button>
+                <div class="col-12 col-xl-8 border border-success pt-2">
+                  <div class="bg-success text-white pt-3 text-right pr-4">
+                    <label for="" id="userNameID">User Name</label>
+                  </div><br>
+                  <label for="" class="text-left">Sender-1 Message</label><br>
+                  <label for="" class="float-right">Sender-2 Message</label><br>
+                  <label for="" class="text-left">Sender-1 Message</label><br>
+                  <label for="" class="float-right">Sender-2 Message</label><br>
+                  <label for="" class="text-left">Sender-1 Message</label><br>
+                  <label for="" class="float-right">Sender-2 Message</label><br>
+                  <label for="" class="text-left">Sender-1 Message</label><br>
+                  <label for="" class="float-right">Sender-2 Message</label><br>
+                  <textarea name="" id="" cols="100" rows="10">
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestias facere similique ipsum sit eum eos quisquam asperiores voluptas nihil eligendi necessitatibus, rerum alias soluta fugiat dicta voluptatibus totam nisi? Repellat.
+                  </textarea>
+                  <button class="btn btn-success btn-block">Send</button><br>
                 </div>
               </div>
             </div>
@@ -122,6 +118,7 @@
   <script src="/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
   <script src="/assets/vendor/aos/aos.js"></script>
   <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/clientSearch.js"></script>
 </body>
 
 </html>

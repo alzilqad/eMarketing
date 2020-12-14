@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title>Manager Profile</title>
   <meta content="" name="descriptison">
   <meta content="" name="keywords">
-  
+
   <link href="/assets/img/favicon.png" rel="icon">
   <link href="/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
   <link href="/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="/assets/vendor/icofont/icofont.min.css" rel="stylesheet">
   <link href="/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
@@ -25,85 +28,87 @@
     <div class="container d-flex align-items-center">
 
       <h1 class="logo mr-auto"><a href="/manager">CRM Spot</a></h1>
-    
+
       <nav class="nav-menu d-none d-lg-block">
         <ul>
-          <li class="active"><a href="/manager">Dashboard</a></li>
-          <li><a href="/clients">Clients</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#portfolio">Appoitments</a></li>
-          <li><a href="/manager/chat">Chat</a></li>
-          <li><a href="#pricing">Transactions</a></li>
-          <li><a href="/manager/profile">Profile</a></li>
-          <li><a href="#contact">Sign Out</a></li>
+          <% if(full_name!=null) { %>
+            <li class="active"><a href="/manager">Dashboard</a></li>
+            <li><a href="/clients">Clients</a></li>
+            <li><a href="/manager/company">Company</a></li>
+            <li><a href="/manager/company/services">Services</a></li>
+            <li><a href="/manager/chat">Chat</a></li>
+            <li><a href="/manager/profile">Profile</a></li>
+            <li><a href="/manager/signout">Sign Out</a></li>
+          <% } else { %>
+            <li><a href="/manager/login">Sign In</a></li>
+          <% } %>
 
         </ul>
       </nav><!-- .nav-menu -->
 
-      <a href="#about" class="get-started-btn scrollto">Get Started</a>
 
     </div>
   </header><!-- End Header -->
 
- 
+
 
   <main id="main">
     <section id="manager-profile-section">
-        <div class="row justify-content-center">
-            <div class="col col-xl-5 mt-3">
-                <div id="manager-profile-box">
-                    <div class="bg-primary text-light pt-3 pb-2 pl-2">
-                        <div class="row justify-content-between">
-                            <div class="col-4">
-                                <h5 class="text-left">Welcome, Manager</h5>
-                            </div>
-                            <div class="col-4 text-right">
-                                <button class="btn btn-warning mr-1"><a href="/manager/profile/edit/1">Edit</a></button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="text-center mt-3 mb-2">
-                        <img src="/assets/img/team/team-1.jpg" alt="No Image.." id="manager-profile-pic"><br><br>
-                        <button class="btn btn-success btn-sm">Upload Profile Pic</button>
-                        <button class="btn btn-danger btn-sm">Remove Profile Pic</button><br><br>
-                    </div>
-                    <table id="appointmentsTable" class="table table-striped table-bordered"
-                                    style="width:100%">
-                                    <tbody>
-                                        <tr>
-                                            <td>Name : </td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Email : </td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Phone : </td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Date of Birth : </td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Address : </td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>City : </td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Joining Date : </td>
-                                            <td></td>
-                                        </tr>
-
-                                    </tbody>
-                                </table>
+      <div class="row justify-content-center">
+        <div class="col col-xl-5 mt-3">
+          <div id="manager-profile-box">
+            <div class="bg-primary text-light pt-3 pb-2 pl-2">
+              <div class="row justify-content-between">
+                <div class="col-4">
+                  <h5 class="text-left">Welcome, Manager</h5>
                 </div>
+                <div class="col-4 text-right">
+                  <button class="btn btn-warning mr-1"><a href="/manager/profile/edit/1">Edit</a></button>
+                </div>
+              </div>
             </div>
+            <div class="text-center mt-3 mb-2">
+              <img src="/assets/img/uploads/<%= user[0].full_name %>.jpg" alt="No Image.." id="manager-profile-pic"><br><br>
+              <form action="/manager/uploads/<%= user[0].full_name %>" method="post" enctype="multipart/form-data">
+                <input class="btn btn-primary" type="file" name="file">
+                <input class="btn btn-success" type="submit" value="Upload">
+              </form>
+            </div>
+            <table id="appointmentsTable" class="table table-striped table-bordered" style="width:100%">
+              <tbody>
+                <tr>
+                  <td>Full Name : </td>
+                  <td> <%= user[0].full_name %></td>
+                </tr>
+                <tr>
+                  <td>Company Name : </td>
+                  <td> <%= user[0].company_name %></td>
+                </tr>
+                <tr>
+                  <td>Email : </td>
+                  <td> <%= user[0].email %></td>
+                </tr>
+                <tr>
+                  <td>Phone : </td>
+                  <td> 0<%= user[0].phone %></td>
+                </tr>
+                <tr>
+                  <td>Date of Birth : </td>
+                  <td> <%= user[0].dob %></td>
+                </tr>
+                <tr>
+                  <td>Address : </td>
+                  <td> <%= user[0].address %></td>
+                </tr>
+                <tr>
+                  <td>City : </td>
+                  <td> <%= user[0].city %></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
+      </div>
     </section>
   </main>
 

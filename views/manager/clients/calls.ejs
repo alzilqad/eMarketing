@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
 </head>
 
-<body onload="clientBodyLoader();">
+<body>
     <header id="header" class="fixed-top">
         <div class="container d-flex align-items-center">
 
@@ -31,18 +31,20 @@
 
             <nav class="nav-menu d-none d-lg-block">
                 <ul>
-                    <li><a href="/manager">Dashboard</a></li>
-                    <li class="active"><a href="/clients">Clients</a></li>
-                    <li><a href="#services">Services</a></li>
-                    <li><a href="#portfolio">Appoitments</a></li>
-                    <li><a href="#team">Notes</a></li>
-                    <li><a href="#pricing">Transactions</a></li>
-                    <li><a href="#contact">Contact</a></li>
-
+                  <% if(full_name!=null) { %>
+                    <li class="active"><a href="/manager">Dashboard</a></li>
+                    <li><a href="/clients">Clients</a></li>
+                    <li><a href="/manager/company">Company</a></li>
+                    <li><a href="/manager/company/services">Services</a></li>
+                    <li><a href="/manager/chat">Chat</a></li>
+                    <li><a href="/manager/profile">Profile</a></li>
+                    <li><a href="/manager/signout">Sign Out</a></li>
+                  <% } else { %>
+                    <li><a href="/manager/login">Sign In</a></li>
+                  <% } %>
+        
                 </ul>
-            </nav><!-- .nav-menu -->
-
-            <a href="#about" class="get-started-btn scrollto">Get Started</a>
+              </nav><!-- .nav-menu -->
 
         </div>
     </header><!-- End Header -->
@@ -54,18 +56,18 @@
             <div class="row mt-4 justify-content-center">
                 <div class="col col-xl-2 border rounded border-primary">
                     <div class="border-bottom text-center border-sercondary">
-                        <img class="mt-2" src="../../assets/img/team/team-1.jpg" alt="No Image.." id="client-pro-pic"><br>
-                        <label class="mt-4" for="">Mr. XYZ</label><br>
-                        <label class="mt-2" for="">Phone: 017........</label><br>
-                        <label for="">Email: abc@gmail.com</label>
+                        <img class="mt-2" src="/assets/img/team/team-1.jpg" alt="No Image.." id="client-pro-pic"><br>
+                        <label class="mt-4" for=""><%= user[0].full_name %></label><br>
+                        <label class="mt-2" for="">Phone: 0<%= user[0].phone %></label><br>
+                        <label for="">Email: <%= user[0].email %></label>
                     </div>
                     <div class="border-top border-primary pt-4">
-                        <button class="active btn btn-primary btn-block"><a href="/clients/profile/1"><span class="text-light">Profile</span></a></button><br>
-                        <button class="btn btn-secondary btn-block"><a href="/clients/profile/1/calls"><span class="text-light">Calls</span></a></button><br>
-                        <button class="btn btn-info btn-block"><a href="/clients/profile/1/appointments"><span class="text-light">Appoitments</span></a></button><br>
-                        <button class="btn btn-warning btn-block"><a href="/clients/profile/1/notes"><span class="text-light">Notes</span></a></button><br>
-                        <button class="btn btn-danger btn-block"><a href="/clients/profile/1/proposals"><span class="text-light">Proposals</span></a></button><br>
-                        <button class="btn btn-dark btn-block"><a href="/clients/profile/1/chat"><span class="text-light">Chat</span></a></button><br>  
+                        <button class="active btn btn-primary btn-block"><a href="/clients/profile/<%= user[0].id %>"><span class="text-light">Profile</span></a></button><br>
+                        <button class="btn btn-secondary btn-block"><a href="/clients/profile/<%= user[0].id %>/calls"><span class="text-light">Calls</span></a></button><br>
+                        <button class="btn btn-info btn-block"><a href="/clients/profile/<%= user[0].id %>/appointments"><span class="text-light">Appoitments</span></a></button><br>
+                        <button class="btn btn-warning btn-block"><a href="/clients/profile/<%= user[0].id %>/notes"><span class="text-light">Notes</span></a></button><br>
+                        <button class="btn btn-danger btn-block"><a href="/clients/profile/<%= user[0].id %>/proposals"><span class="text-light">Proposals</span></a></button><br>
+                        <button class="btn btn-dark btn-block"><a href="/clients/profile/<%= user[0].id %>/chat"><span class="text-light">Chat</span></a></button><br>  
                     </div>
                 </div>
                 <div class="col col-xl-6">
@@ -75,6 +77,7 @@
                                 <h5 class="text-light">Calls</h5>
                             </div>
                             <div class="col-6 text-right bg-primary  mb-3 pt-3">
+                                <form action="/clients/profile/<%= user[0].id %>/calls" method="post">
                                 <!-- Button trigger modal -->
                                 <button type="button" class="btn btn-success mb-3" data-toggle="modal"
                                     data-target="#add-call-modal">
@@ -96,40 +99,82 @@
                                             <div class="modal-body">
                                                 <div class="row">
                                                     <div class="col">
-                                                        <input class="form-control" type="text" placeholder="Title"><br>
-                                                        <input class="form-control" type="text" placeholder="Date"><br>
+                                                        <input class="form-control" type="text" placeholder="Title" name="title"><br>
+                                                        <input class="form-control" type="text" placeholder="Description" name="description"><br>
+                                                        <input class="form-control" type="date" placeholder="Date" name="date"><br>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-warning"
                                                     data-dismiss="modal">Cancel</button>
-                                                <button type="button" class="btn btn-success">Save changes</button>
+                                                <button type="submit" class="btn btn-success">Add Call</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                            </form>
                             </div>
                             <div class="col-12">
-                                <table id="callsTable" class="table table-striped table-bordered" style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th>Date</th>
-                                            <th>Title</th>
-                                            <th>Created By</th>
-                                            <th colspan="2">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>abcd</td>
-                                            <td>defg</td>
-                                            <td>hijk</td>
-                                            <td><button class="btn btn-info btn-block">Edit</button></td>
-                                            <td><button class="btn btn-danger btn-block">Delete</button></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                <table id="appointmentsTable" class="table table-striped table-bordered"
+                                style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Description</th>
+                                        <th>Date</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% for(var i = 0; i < calls.length; i++) { %>
+                                    <tr>
+                                        <td><%= calls[i].title %></td>
+                                        <td><%= calls[i].description %></td>
+                                        <td><%= calls[i].date %></td>
+                                        <td class="text-center">
+                                            <form action="/clients/profile/<%= user[0].id %>/calls/edit/<%= user[0].id %>" method="post">
+                                                <!-- Button trigger modal -->
+                                                <button type="button" class="btn btn-success mb-3" data-toggle="modal"
+                                                    data-target="#update-call-modal">
+                                                    Edit Call
+                                                </button>
+                
+                                                <!-- Modal -->
+                                                <div class="modal text-left fade" id="update-call-modal" tabindex="-2" role="dialog"
+                                                    aria-labelledby="exampleModalLabel2" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel2">Edit Call</h5>
+                                                                <button type="button" class="close" data-dismiss="modal"
+                                                                    aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div class="row">
+                                                                    <div class="col">
+                                                                        <input class="form-control" type="text" placeholder="Title" value="<%= calls[i].title %>" name="title"><br>
+                                                                        <input class="form-control" type="text" placeholder="Description" value="<%= calls[i].description %>"name="description"><br>
+                                                                        <input class="form-control" type="date" placeholder="Date" value="<%= calls[i].date %>" name="date"><br>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-warning"
+                                                                    data-dismiss="modal">Cancel</button>
+                                                                <button type="submit" class="btn btn-success">Save Changes</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        <a href="/clients/profile/<%= user[0].id %>/calls/delete/<%= calls[i].id %>" class="btn btn-danger ">Delete</a></td>
+                                    </tr>
+                                    <% } %>
+                                </tbody>
+                            </table>
                             </div>
                         </div>
                     </section>
@@ -179,9 +224,7 @@
 
     <script>
         $(document).ready(function () {
-            $('#callsTable').DataTable();
             $('#appointmentsTable').DataTable();
-            //$('#callsTable').DataTable();
         });
         $(function () {
             $('[data-toggle="popover"]').popover()

@@ -24,7 +24,7 @@
   <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center">
 
-      <h1 class="logo mr-auto"><a href="/manager">CRM Spot</a></h1>
+      <h1 class="logo mr-auto"><a href="/home">CRM Spot</a></h1>
       <a href="#about" class="get-started-btn scrollto">Get Started</a>
 
     </div>
@@ -35,9 +35,15 @@
         <div class="row justify-content-center mt-5 mb-5">
             <div class="col col-sm-7 col-lg-5 col-xl-3 mt-5 mb-5 text-center" id="login-box">
                 <h2>Login Panel</h2><br>
-                <input class="form-control"type="text" placeholder="Email"><br>
-                <input class="form-control"type="text" placeholder="Password"><br>
+                <% if(error!=null) { %>
+                  <span class="text-danger"><%=error[0].msg %></span><br>
+                <% } %>
+                <br>
+                <form method="post" action="/manager/login">
+                  <input class="form-control"type="email" placeholder="Email" name="email"><br>
+                <input class="form-control"type="password" placeholder="Password" name="password"><br>
                 <button class="btn btn-primary btn-block">Login</button><br>
+                </form>
                 <a href="/manager/signup">Want to sign up?</a><br>
                 <a href="/manager/forgot-password">Forgot Your Password?</a>
             </div>

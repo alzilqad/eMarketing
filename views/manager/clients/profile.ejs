@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
 </head>
 
-<body onload="clientBodyLoader();">
+<body>
     <header id="header" class="fixed-top">
         <div class="container d-flex align-items-center">
 
@@ -32,19 +32,20 @@
 
             <nav class="nav-menu d-none d-lg-block">
                 <ul>
-                    <li><a href="/manager">Dashboard</a></li>
-                    <li class="active"><a href="/clients">Clients</a></li>
-                    <li><a href="#services">Services</a></li>
-                    <li><a href="#portfolio">Appoitments</a></li>
-                    <li><a href="#team">Notes</a></li>
-                    <li><a href="#pricing">Transactions</a></li>
-                    <li><a href="#contact">Contact</a></li>
-
+                  <% if(full_name!=null) { %>
+                    <li class="active"><a href="/manager">Dashboard</a></li>
+                    <li><a href="/clients">Clients</a></li>
+                    <li><a href="/manager/company">Company</a></li>
+                    <li><a href="/manager/company/services">Services</a></li>
+                    <li><a href="/manager/chat">Chat</a></li>
+                    <li><a href="/manager/profile">Profile</a></li>
+                    <li><a href="/manager/signout">Sign Out</a></li>
+                  <% } else { %>
+                    <li><a href="/manager/login">Sign In</a></li>
+                  <% } %>
+        
                 </ul>
-            </nav><!-- .nav-menu -->
-
-            <a href="#about" class="get-started-btn scrollto">Get Started</a>
-
+              </nav><!-- .nav-menu -->
         </div>
     </header><!-- End Header -->
 
@@ -56,17 +57,17 @@
                 <div class="col col-xl-2 border rounded border-primary">
                     <div class="border-bottom text-center border-sercondary">
                         <img class="mt-2" src="../../assets/img/team/team-1.jpg" alt="No Image.." id="client-pro-pic"><br>
-                        <label class="mt-4" for="">Mr. XYZ</label><br>
-                        <label class="mt-2" for="">Phone: 017........</label><br>
-                        <label for="">Email: abc@gmail.com</label>
+                        <label class="mt-4" for="">Name: <%= user[0].full_name %></label><br>
+                        <label class="mt-2" for="">Phone: 0<%= user[0].phone %></label><br>
+                        <label for="">Email: <%= user[0].email %></label>
                     </div>
                     <div class="border-top border-primary pt-4">
-                        <button class="active btn btn-primary btn-block"><a href="/clients/profile/1"><span class="text-light">Profile</span></a></button><br>
-                        <button class="btn btn-secondary btn-block"><a href="/clients/profile/1/calls"><span class="text-light">Calls</span></a></button><br>
-                        <button class="btn btn-info btn-block"><a href="/clients/profile/1/appointments"><span class="text-light">Appoitments</span></a></button><br>
-                        <button class="btn btn-warning btn-block"><a href="/clients/profile/1/notes"><span class="text-light">Notes</span></a></button><br>
-                        <button class="btn btn-danger btn-block"><a href="/clients/profile/1/proposals"><span class="text-light">Proposals</span></a></button><br>
-                        <button class="btn btn-dark btn-block"><a href="/clients/profile/1/chat"><span class="text-light">Chat</span></a></button><br>  
+                        <button class="active btn btn-primary btn-block"><a href="/clients/profile/<%= user[0].id %>"><span class="text-light">Profile</span></a></button><br>
+                        <button class="btn btn-secondary btn-block"><a href="/clients/profile/<%= user[0].id %>/calls"><span class="text-light">Calls</span></a></button><br>
+                        <button class="btn btn-info btn-block"><a href="/clients/profile/<%= user[0].id %>/appointments"><span class="text-light">Appoitments</span></a></button><br>
+                        <button class="btn btn-warning btn-block"><a href="/clients/profile/<%= user[0].id %>/notes"><span class="text-light">Notes</span></a></button><br>
+                        <button class="btn btn-danger btn-block"><a href="/clients/profile/<%= user[0].id %>/proposals"><span class="text-light">Proposals</span></a></button><br>
+                        <button class="btn btn-dark btn-block"><a href="/clients/profile/<%= user[0].id %>/chat"><span class="text-light">Chat</span></a></button><br>  
                     </div>
                 </div>
                 <div class="col col-xl-6">
@@ -76,87 +77,58 @@
                                 <h5 class="text-light">Profile Details</h5>
                             </div>
                             <div class="col-6 text-right bg-primary  mb-3 pt-3">
-                                <button class="btn btn-success mb-2" onclick="getElementById('profile-section').style.display='none';getElementById('profile-edit-section').style.display='block';">Edit</button>
+                                <button class="btn btn-success mb-2"><a href="/clients/profile/edit/<%= user[0].id %>" class="text-light">Edit</a></button>
                             </div>
                             <div class="col-12">
                                 <table class="table table-bordered">
                                     <tbody>
                                         <tr>
                                             <td>Name : </td>
-                                            <td></td>
+                                            <td><%= user[0].full_name %></td>
                                         </tr>
                                         <tr>
                                             <td>Phone : </td>
-                                            <td></td>
+                                            <td>0<%= user[0].phone %></td></td>
                                         </tr>
                                         <tr>
                                             <td>Email : </td>
-                                            <td></td>
+                                            <td><%= user[0].email %></td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Address : </td>
+                                            <td><%= user[0].address %></td></td>
                                         </tr>
                                         <tr>
                                             <td>City : </td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>State : </td>
-                                            <td></td>
+                                            <td><%= user[0].city %></td></td>
                                         </tr>
                                         <tr>
                                             <td>Country : </td>
-                                            <td></td>
+                                            <td><%= user[0].country %></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Website : </td>
+                                            <td><%= user[0].website %></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Billing City : </td>
+                                            <td><%= user[0].billing_city %></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Billing State : </td>
+                                            <td><%= user[0].billing_state %></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Billing Zip Code : </td>
+                                            <td><%= user[0].billing_zip %></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Billing Country : </td>
+                                            <td><%= user[0].billing_country %></td>
                                         </tr>
                                         <tr>
                                             <td>Status : </td>
-                                            <td></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </section>
-                    <section id="profile-edit-section">
-                        <div class="row m-0 p-0">
-                            <div class="col-6 bg-primary  mb-3 pt-3">
-                                <h5 class="text-light">Profile Edit</h5>
-                            </div>
-                            <div class="col-6 text-right bg-primary  mb-3 pt-3">
-                                <button class="btn btn-danger mb-2">Remove Client</button>
-                            </div>
-                            <div class="col-12">
-                                <table class="table table-bordered">
-                                    <tbody>
-                                        <tr>
-                                            <td>Name : </td>
-                                            <td><input class="form-control" type="text" placeholder="Name"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Phone : </td>
-                                            <td><input class="form-control" type="text" placeholder="Phone"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Email : </td>
-                                            <td><input class="form-control" type="text" placeholder="Email"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>City : </td>
-                                            <td><input class="form-control" type="text" placeholder="City"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>State : </td>
-                                            <td><input class="form-control" type="text" placeholder="State"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Country : </td>
-                                            <td><input class="form-control" type="text" placeholder="Country"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Status : </td>
-                                            <td><input class="form-control" type="text" placeholder="Status"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center" colspan="2">
-                                                <button class="btn btn-success" onclick="document.getElementById('profile-edit-section').style.display='none';document.getElementById('profile-section').style.display='block';">Save Changes</button>
-                                            </td>
+                                            <td><%= user[0].status %></td>
                                         </tr>
                                     </tbody>
                                 </table>

@@ -34,9 +34,15 @@
     <section>
         <div class="row justify-content-center mt-5 mb-5">
             <div class="col col-sm-7 col-lg-5 col-xl-3 mt-5 mb-5 text-center" id="login-box">
-                <h2>Enter the verification code</h2><br>
-                <input class="form-control"type="text" placeholder="Code"><br>
-                <button class="btn btn-primary btn-block">Verify</button><br>
+              <h3>Hello, <b><i><%= user_name %></i></b></h3>
+                <h5>Enter the verification code sent to your email address:</h5><br>
+                <% if(error!=null) { %>
+                  <span class="text-danger"><%=error[0].msg %></span><br>
+                <% } %>
+                <form method="post" action="/manager/verify-code">
+                  <input class="form-control"type="number" minlength="4" name="verification_code" placeholder="Code"><br>
+                  <button class="btn btn-primary btn-block">Verify</button><br>
+                </form>
             </div>
         </div>
     </section>

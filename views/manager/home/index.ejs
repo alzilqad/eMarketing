@@ -28,19 +28,20 @@
     
       <nav class="nav-menu d-none d-lg-block">
         <ul>
-          <li class="active"><a href="/manager">Dashboard</a></li>
-          <li><a href="/clients">Clients</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#portfolio">Appoitments</a></li>
-          <li><a href="/manager/chat">Chat</a></li>
-          <li><a href="#pricing">Transactions</a></li>
-          <li><a href="/manager/profile">Profile</a></li>
-          <li><a href="#contact">Sign Out</a></li>
+          <% if(full_name!=null) { %>
+            <li class="active"><a href="/manager">Dashboard</a></li>
+            <li><a href="/clients">Clients</a></li>
+            <li><a href="/manager/company">Company</a></li>
+            <li><a href="/manager/company/services">Services</a></li>
+            <li><a href="/manager/chat">Chat</a></li>
+            <li><a href="/manager/profile">Profile</a></li>
+            <li><a href="/manager/signout">Sign Out</a></li>
+          <% } else { %>
+            <li><a href="/manager/login">Sign In</a></li>
+          <% } %>
 
         </ul>
       </nav><!-- .nav-menu -->
-
-      <a href="#about" class="get-started-btn scrollto">Get Started</a>
 
     </div>
   </header><!-- End Header -->
@@ -54,13 +55,14 @@
             <div class="col col-xl-8">
               <div class="row justify-content-around">
                 <div class="col-3 manager-dashboard-boxes text-center pt-5">
-                  <h6 class="mb-5">Total Clients: 0</h6>
-                  <h6 class="mb-5">Active Clients: 0</h6>
+                  <h5 class="mb-5">Total Clients: <span class="h1"><b><i><%= clientsCount[0].clientsCount %></i></b></span></h5>
+                  <h5 class="mb-5">Active Clients: <span class="h1"><b><i><%= activeClientsCount[0].activeClientsCount %></i></b></span></h5>
                   <button class="btn btn-link border-light mb-1"><a class="text-center text-light  text-decoration-none" href="/clients">Manage Clients</a></button>
                 </div>
                 <div class="col-4 manager-dashboard-boxes text-center pt-5" style="background: #5F9F9F;">
-                  <h6 class="mb-5">Total Services: 0</h6>
-                  <h6 class="mb-5">Active Services: 0</h6>
+                  
+                  <h6 class="mb-5">Total Services: <span class="h1"><b><i><%= servicesCount[0].serviceCount %></i></b></span></h6>
+                  <h6 class="mb-5">Available Services: <span class="h1"><b><i><%= activeServicesCount[0].serviceCount %></i></b></span></h6>
                   <button class="btn btn-link border-light mb-1"><a class="text-center text-light  text-decoration-none" href="/clients">Manage Services</a></button>
                 </div>
                 <div class="col-4 manager-dashboard-boxes text-center pt-5" style="background: #7A67EE;">

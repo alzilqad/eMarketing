@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../header') %>
+
+  <main id="main">
+    <section id="login-box">
+      <div align="center">
+        <form method="post">
+          <fieldset>
+            <legend><h2>REGISTRATION</h2></legend>
+            <table>
+              <% if(error!="") {%>
+              <tr>
+                <a style="color: red"><%=error[0].msg%></a>
+              </tr>
+              <% } %>
+              <tr>
+                <td>Username:</td>
+                <td>
+                  <input class="form-control" type="text" name="username" />
+                </td>
+              </tr>
+              <tr>
+                <td>Password:</td>
+                <td>
+                  <input class="form-control" type="password" name="password" />
+                </td>
+              </tr>
+              <tr>
+                <td>Name:</td>
+                <td>
+                  <input class="form-control" type="text" name="full_name" />
+                </td>
+              </tr>
+              <tr>
+                <td>Contact No:</td>
+                <td>
+                  <input class="form-control" type="text" name="contact_no" />
+                </td>
+              </tr>
+              <tr>
+                <td>Email:</td>
+                <td><input class="form-control" type="text" name="email" /></td>
+              </tr>
+              <tr>
+                <td>Address:</td>
+                <td>
+                  <input class="form-control" type="text" name="address" />
+                </td>
+              </tr>
+              <tr>
+                <td>Country:</td>
+                <td>
+                  <input class="form-control" type="text" name="country" />
+                </td>
+              </tr>
+              <tr>
+                <td>Gender:</td>
+                <td>
+                  <input class="form-control" type="text" name="gender" />
+                </td>
+              </tr>
+              <tr>
+                <td>Date of Birth:</td>
+                <td><input class="form-control" type="date" name="dob" /></td>
+              </tr>
+              <!-- <tr>
+                <td>Role:</td>
+                <td>
+                  <select class="form-control" required name="type">
+                    <option value="user">User</option>
+                    <option value="scout">Scout</option>
+                  </select>
+                </td>
+              </tr> -->
+              <tr>
+                <td></td>
+                <td>
+                  <input
+                    class="btn btn-primary"
+                    type="submit"
+                    name="submit"
+                    value="Submit"
+                  />
+                  <a class="btn btn-primary" href="/login">Login</a>
+                </td>
+              </tr>
+            </table>
+          </fieldset>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <%- include('../footer') %>
+</html>
